@@ -1,53 +1,41 @@
 "use client"
 import React from 'react'
-import CountUp from 'react-countup';
-import Image from 'next/image';
 
+import Image from 'next/image';
+import { Col, Container, Row } from 'react-bootstrap';
+import CounterComponent from "../landingpage/Counter"
 const Counter = () => {
-    const count = {
-        fontWeight: "700",
-        letterSpacing: "1.2px",
-        lineHeight: "1.2",
-        padding: "20px 0"
-    };
+    const counters = [
+        { image: '/completed.gif', end: 100, suffix: '+', label: 'PROJECT' },
+        { image: '/happy.gif', end: 100, suffix: '%', label: 'DRAWINGS' },
+        { image: '/commits.gif', end: 1000, suffix: '+', label: 'CLIENTS' },
+        { image: '/reviews.gif', end: 500, suffix: '+', label: 'REVIEWS' }
+    ];
+
     return (
 
-        <div className="counterbg" style={{ background: "#002338", color: "#FDC305" }}>
+        <div className="counterbg py-5" >
 
-            <div className="container">
+            <Container>
 
-                <div className="row py-5">
-                    <div className="col-lg-3">
-                        <div className="counter text-center">
-                        <Image src="/completed.gif" width={100} height={100} alt="" />
-                            <h1 style={count}><CountUp start={0} end={100} duration={10} suffix="+" /></h1>
-                            <h5>PROJECTS  COMPLETED</h5>
-                        </div>
-                    </div>
-                    <div className="col-lg-3">
-                        <div className="counter text-center">
-                        <Image src='/happy.gif' width={100} height={100} alt="" />
-                            <h1 style={count}><CountUp start={0} end={100} duration={10} suffix="%" /></h1>
-                            <h5>HAPPY  CLIENTS</h5>
-                        </div>
-                    </div>
-                    <div className="col-lg-3">
-                        <div className="counter text-center">
-                        <Image src='/commits.gif' width={100} height={100} alt="" />
-                            <h1 style={count}><CountUp start={0} end={1000} duration={10} suffix="+" /></h1>
-                            <h5>CODE COMMITS</h5>
-                        </div>
-                    </div>
-                    <div className="col-lg-3">
-                        <div className="counter text-center">
-                        <Image src="/reviews.gif" width={100} height={100} alt="" />
-                            <h1 style={count}><CountUp start={0} end={500} duration={10} suffix="+" /></h1>
-                            <h5>POSITIVE REVIEWS</h5>
-                        </div>
-                    </div>
+                <Row>
 
-                </div>
-            </div>
+                    {counters.map((counter, index) => (
+                        <Col key={index} xs={12} md={6} lg={3}>
+
+                            <CounterComponent
+                                image={counter.image}
+                                text={counter.label}
+                                end={counter.end}
+                                suffix={counter.suffix}
+                            />
+
+                        </Col>
+                    ))}
+
+                </Row>
+            </Container>
+
         </div>
     )
 }
