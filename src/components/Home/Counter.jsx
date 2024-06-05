@@ -1,9 +1,7 @@
 "use client"
 import React from 'react'
-
-import Image from 'next/image';
 import { Col, Container, Row } from 'react-bootstrap';
-import CounterComponent from "../landingpage/Counter"
+import CounterCards from "../landingpage/CounterCards"
 const Counter = () => {
     const counters = [
         { image: '/completed.gif', end: 100, suffix: '+', label: 'PROJECT' },
@@ -23,7 +21,7 @@ const Counter = () => {
                     {counters.map((counter, index) => (
                         <Col key={index} xs={12} md={6} lg={3}>
 
-                            <CounterComponent
+                            <CounterCards
                                 image={counter.image}
                                 text={counter.label}
                                 end={counter.end}

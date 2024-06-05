@@ -2,7 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import CountUp from 'react-countup';
 
-const CounterComponent = ({ image, text, end, suffix }) => {
+const CounterCards = ({ image, text, end, suffix }) => {
 
     return (
         <>
@@ -21,4 +21,4 @@ const count = {
     padding: "20px 0"
 };
 
-export default CounterComponent
+export default CounterCards
