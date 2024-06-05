@@ -1,24 +1,27 @@
+:root {
+  --primary-color: #002338;
+  --secondary-color: #ffb300;
+}
 
 .navbar {
   transition: background-color 0.3s ease-in-out;
   border-bottom: 2px solid transparent;
-  
 }
 
 .nav-link.active {
-  color: #FFB300  !important;
-  transition: color 0.3s; 
+  color: var(--secondary-color) !important;
+  transition: color 0.3s;
 }
 .nav-link-wrapper {
   position: relative;
   display: inline-block;
 }
-.activenav{
-  color: #FFB300 !important;
+.activenav {
+  color: var(--secondary-color) !important;
   font-weight: 700 !important;
   transition: 0.2s;
 }
-.activenav .underline{
+.activenav .underline {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
@@ -28,7 +31,7 @@
   position: absolute;
   width: 100%;
   height: 3px;
-  background: #FFB300;
+  background: var(--secondary-color);
   bottom: 0;
   left: 0;
   transform: scaleX(0);
@@ -41,24 +44,43 @@
   transform-origin: bottom left;
 }
 
-
-
-
-@media only screen and (max-width: 992px)  {
-
-.navbar-toggler:focus{
-  box-shadow: none !important;
-  outline: none !important;
+.Sidebar {
+  background-color: var(--primary-color) !important;
+  width: 300px !important;
 }
-
-.navbar-toggler{
-  box-shadow: none !important;
-  outline: none !important;
-  border: none !important;
-}
+.Sidebar .nav-link {
+  color: white !important;
+  border-bottom: 2px solid var(--secondary-color);
 
 }
+.Sidebar .nav{
+  width: 100%;
+  display: block !important;
+}
+.Sidebar .activenav {
+  color: var(--secondary-color) !important;
+}
+.Sidebar .offcanvas-title {
+  color: var(--secondary-color) !important;
+}
+.offcanvas-header .btn-close{
+  background-color: var(--secondary-color) !important;
+  opacity: 1 !important;
+}
 
+
+@media only screen and (max-width: 992px) {
+  .navbar-toggler:focus {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  .navbar-toggler {
+    box-shadow: none !important;
+    outline: none !important;
+    border: none !important;
+  }
+}
 
 .sidenav {
   height: 100%;
@@ -67,11 +89,11 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #002338;
+  background-color: var(--primary-color);
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
-  text-align:center;
+  text-align: center;
   z-index: 2000;
 }
 
@@ -84,10 +106,10 @@
   /* transition: 1.3s; */
 }
 
-.sidenav a:hover{
+.sidenav a:hover {
   color: #f1f1f1;
 }
-.nav-item{
+.nav-item {
   list-style-type: none;
 }
 
@@ -101,29 +123,28 @@
 }
 
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
 }
-@media only screen and (min-width: 992px)  {
-  .sidenav{
+@media only screen and (min-width: 992px) {
+  .sidenav {
     display: none !important;
   }
-  .hireus{
+  .hireus {
     display: none !important;
   }
-  
 }
-
-
-
 
 .capabilities h2 {
-  color: #002338;
+  color: var(--primary-color);
   font-weight: 700;
-
 }
 
-.hireus{
+.hireus {
   position: absolute;
   position: fixed;
   right: 3%;
@@ -131,8 +152,8 @@
   z-index: 6000;
   animation: zoom-in-zoom-out 1s ease infinite;
 }
-.hireus button{
-  background-color: #FFB300;
+.hireus button {
+  background-color: var(--secondary-color);
   color: #001522;
   border: none;
   padding: 15px;
@@ -150,6 +171,6 @@
   }
 }
 
-.footertext:hover{
-  fill: #FFB300;
+.footertext:hover {
+  fill: var(--secondary-color);
 }

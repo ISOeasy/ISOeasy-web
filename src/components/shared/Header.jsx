@@ -3,7 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
-import { Navbar, Nav, Container, Button, Offcanvas } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import SidebarNavlinks from './SidebarNavlinks';
 
 const navItems = [
     { href: '/', label: 'Home' },
@@ -39,14 +40,14 @@ const Header = () => {
                     setScrolling(false);
                 }
             };
-            handleScroll()
+            handleScroll();
             window.addEventListener('scroll', handleScroll);
 
             return () => {
                 window.removeEventListener('scroll', handleScroll);
             };
         }
-    }, []);
+    }, [pathname]);
 
     const navbarStyle = {
         backgroundColor: scrolling ? '#002338' : 'rgba(0, 0, 0, 0.4)',
@@ -85,34 +86,13 @@ const Header = () => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <Offcanvas show={showOffcanvas} onHide={handleOffcanvasClose} placement="end">
-                <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>Navigation</Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body className='p-0'>
-                    <Nav>
-                        <div>
-                            {navItems.map((item, index) => (
-
-                                <Nav.Link
-                                    key={index}
-                                    href={item.href}
-                                    className={`nav-link-wrapper py-3 ${activeButton === index ? 'activenav' : ''}`}
-                                    onClick={handleOffcanvasClose}
-                                >
-
-                                    {item.label}
-
-
-                                </Nav.Link>
-
-
-
-                            ))}
-                        </div>
-                    </Nav>
-                </Offcanvas.Body>
-            </Offcanvas>
+            <SidebarNavlinks
+                navItems={navItems}
+                showOffcanvas={showOffcanvas}
+                handleOffcanvasClose={handleOffcanvasClose}
+                activeButton={activeButton}
+                handleClick={handleClick}
+            />
         </>
     );
 };
