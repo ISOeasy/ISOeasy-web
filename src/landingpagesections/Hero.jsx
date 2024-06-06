@@ -11,7 +11,6 @@ export default function Hero() {
     const particlesLoaded = (container) => {
         console.log(container);
     };
-
     return (
         <>
             <div className="py-5" style={{ background: "#002338" }}>

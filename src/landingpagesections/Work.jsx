@@ -4,7 +4,7 @@ import DesignsCard from '../components/landingpagecomponents/DesignsCard';
 import Heading from '../components/shared/Heading';
 const projects = [
   {
-    title: 'Dobie Dog',
+    title: 'Dobie Do',
     description: 'We developed game website and UI/UX for dobiedog',
     href: '/product/dobiedog',
     image: "/dobie.jpg"
