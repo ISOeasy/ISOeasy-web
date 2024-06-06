@@ -57,91 +57,88 @@ const ContactForm = () => {
     };
 
     return (
-        <section className="mt-5">
-            <Container className="py-4">
+        <section className="mt-4pb-3">
+            <Container className="pt-2 pb-4">
                 <Heading heading={"GET IN TOUCH"} />
-                <Card
-                    className="p-4 border-0"
-                    style={{ boxShadow: "2px 4px 6px 4px rgba(0, 0, 0, 0.1)" }}
-                >
-                    <Form className="py-4 text-center" ref={form} onSubmit={sendEmail}>
+                <Col xs={12} lg={9} className="mx-auto">
+                    <Card
+                        className="px-5 py-4 border-0 contact-card"
 
-                        <Row>
-                            <Col lg={6}>
-                                <Form.Group className="mb-3">
-                                    <Form.Control
-                                        type="text"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        required
-                                        name="name"
-                                        placeholder="Your Name"
-                                    />
-                                </Form.Group>
-                            </Col>
-                            <Col lg={6}>
-                                <Form.Group className="mb-3">
-                                    <Form.Control
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        required
-                                        name="email"
-                                        placeholder="Your Email"
-                                    />
-                                </Form.Group>
-                            </Col>
-                            <Col lg={6}>
-                                <Form.Group className="mb-3">
-                                    <Form.Control
-                                        type="number"
-                                        value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}
-                                        placeholder="Phone Number"
-                                        name="phone"
-                                    />
-                                </Form.Group>
-                            </Col>
-                            <Col lg={6}>
-                                <Form.Group className="mb-3">
-                                    <Form.Control
-                                        type="text"
-                                        value={subject}
-                                        onChange={(e) => setSubject(e.target.value)}
-                                        placeholder="Subject"
-                                        name="subject"
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Form.Group className="mb-3">
-                            <Form.Control
-                                as="textarea"
-                                rows={6}
-                                placeholder="Your Message"
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                required
-                                name="message"
-                            />
-                        </Form.Group>
-                        <Button
-                            type="submit"
-                            disabled={loading}
-                            className="custom-btn btn-5"
-                        >
-                            <span>
-                                {loading ? "..." : submitted ? "Submitted" : "Submit"}
-                            </span>
-                        </Button>
-                    </Form>
-                    {submitted && (
-                        <Alert variant="success" className="mt-3 text-white">
-                            Thank you for taking the time to submit the form, we will be
-                            reaching out to you very soon.
-                        </Alert>
-                    )}
-                </Card>
+                    >
+                        <Form className="py-4 text-center" ref={form} onSubmit={sendEmail}>
+
+                            <Row>
+                                <Col lg={6}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Control
+                                            type="text"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                            required
+                                            name="name"
+                                            placeholder="Your Name"
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                <Col lg={6}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Control
+                                            type="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            required
+                                            name="email"
+                                            placeholder="Your Email"
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                <Col lg={6}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Control
+                                            type="number"
+                                            value={phone}
+                                            onChange={(e) => setPhone(e.target.value)}
+                                            placeholder="Phone Number"
+                                            name="phone"
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                <Col lg={6}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Control
+                                            type="text"
+                                            value={subject}
+                                            onChange={(e) => setSubject(e.target.value)}
+                                            placeholder="Subject"
+                                            name="subject"
+                                        />
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Form.Group className="mb-3">
+                                <Form.Control
+                                    as="textarea"
+                                    rows={6}
+                                    placeholder="Your Message"
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    required
+                                    name="message"
+                                />
+                            </Form.Group>
+                            <Button variant="outline-warning" type="submit"
+                                disabled={loading}>{loading ? "..." : submitted ? "Submitted" : "Submit"}</Button>
+
+                        </Form>
+                        {submitted && (
+                            <Alert variant="success" className="mt-3 text-white">
+                                Thank you for taking the time to submit the form, we will be
+                                reaching out to you very soon.
+                            </Alert>
+                        )}
+                    </Card>
+                </Col>
+
             </Container>
         </section>
     );

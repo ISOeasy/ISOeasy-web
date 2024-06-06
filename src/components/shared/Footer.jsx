@@ -17,6 +17,13 @@ const Footer = () => {
     const social = {
         color: "white",
     }
+    const navItems = [
+        { href: '#', label: 'Home' },
+        { href: '#', label: 'Who We Are' },
+        { href: '#', label: 'Services' },
+        { href: '#', label: 'Some of our features' },
+    ];
+
     return (
         <>
             <footer className='footer' >
@@ -35,10 +42,10 @@ const Footer = () => {
                         </Col>
                         <Col lg={2}>
                             <h5 style={headings}>PAGES</h5>
-                            {['/', '/about', '/services', '/casestudies', '/pricing', '/contact'].map((page, index) => (
+                            {navItems.map((page, index) => (
                                 <div className='py-2' key={page}>
-                                    <Link className="text-white" href={page} style={{ textDecoration: "none" }}>
-                                        {['Home', 'About Us', 'Services', 'Case Studies', 'Pricing', 'Contact Us'][index]}
+                                    <Link className="text-white" href={page.href} style={{ textDecoration: "none" }}>
+                                        {page.label}
                                     </Link>
                                 </div>
                             ))}
@@ -48,10 +55,10 @@ const Footer = () => {
                             <div className="sociallinks">
                                 <Row className="pb-3">
                                     {[
-                                        { href: "https://pk.linkedin.com/company/semantictribe", icon: "linkedin" },
-                                        { href: "https://instagram.com/semantictribe?igshid=OGQ5ZDc2ODk2ZA==", icon: "instagram" },
-                                        { href: "https://www.facebook.com/semanticnerds/", icon: "facebook" },
-                                        { href: "https://twitter.com/SemanticTribe", icon: "twitter" }
+                                        { href: "#", icon: "linkedin" },
+                                        { href: "#", icon: "instagram" },
+                                        { href: "#", icon: "facebook" },
+                                        { href: "#", icon: "twitter" }
                                     ].map((social, index) => (
                                         <Col key={index} xs={2}>
                                             <div className="social">
@@ -75,9 +82,7 @@ const Footer = () => {
                                             <div className="location text-white">
                                                 USA: Connecticut 06880
                                                 pi box 25 larkspur Ca 94977
-                                                <div className='pt-1'>
-                                                    PAK : 48 C MODEL TOWN LAHORE
-                                                </div>
+
                                             </div>
                                         </Col>
                                     </Row>

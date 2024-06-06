@@ -7,11 +7,10 @@ import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import SidebarNavlinks from './SidebarNavlinks';
 
 const navItems = [
-    { href: '/', label: 'Home' },
-    { href: '#', label: 'Who We Are' },
+    { href: '#home', label: 'Home' },
+    { href: '#vision', label: 'Vision' },
     { href: '#', label: 'Services' },
-    { href: '#', label: 'Some Of our features' },
-    { href: '#', label: 'Contact Us' },
+    { href: '#', label: 'Some of our features' },
 ];
 
 const Header = () => {
@@ -81,7 +80,7 @@ const Header = () => {
                             ))}
                         </Nav>
                         <Link href='/contact' passHref>
-                            <Button variant="outline-warning">Join Our Mailing List</Button>
+                            <Button variant="outline-warning">Join Mailing List</Button>
                         </Link>
                     </Navbar.Collapse>
                 </Container>

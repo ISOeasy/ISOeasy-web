@@ -13,7 +13,8 @@ export default function Hero() {
     };
     return (
         <>
-            <div className="py-5" style={{ background: "#002338" }}>
+        <section id="home">
+        <div className="py-5" style={{ background: "#002338" }}>
                 <div id="particles-container" >
                     <Particles
                         id="tsparticles"
@@ -96,7 +97,7 @@ export default function Hero() {
 
                         <div className="header">
                             <h1 >
-                                ISO<span style={{ color: "#FFB300" }}>PIPELINE</span>
+                                ISO <span style={{ color: "#FFB300" }}>PIPELINE</span>
                             </h1>
 
 
@@ -104,13 +105,13 @@ export default function Hero() {
                         <TypeAnimation
                             sequence={[
 
-                                'Turning Your Imagination into Tangible Creations.',
+                                'Create stunning graphics with ease and precision.',
                                 1000,
-                                'Transforming Your Concepts into Concrete Achievements.',
+                                'Transform your ideas into reality with ISO Pipelines. ',
                                 1000,
-                                'We Bring Your Vision to Life.',
+                                'Customize every detail to fit your unique needs.',
                                 1000,
-                                'Innovation Meets Implementation: Your Vision, Our Craftsmanship.',
+                                'The ultimate tool for designing your workflow.',
                                 1000
                             ]}
                             wrapper="p"
@@ -122,6 +123,8 @@ export default function Hero() {
                     </div>
                 </div>
             </div>
+        </section>
+         
         </>
 
     );

@@ -12,7 +12,7 @@ const DesignsCard = ({ image, title, description }) => {
                             alt={title}
                             src={image}
                             layout='fill'
-                            objectFit='contain'
+                            objectFit='cover'
                         />
                     </div>
                 </div>
