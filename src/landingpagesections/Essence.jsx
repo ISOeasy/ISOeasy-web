@@ -3,20 +3,20 @@ import Image from 'next/image';
 import Heading from '../components/shared/Heading';
 import { Container } from 'react-bootstrap';
 const honeycombData = [
-  { id: 1, imageUrl: "/1.gif", title: 'FASTEST RESPONSE TIMES' },
-  { id: 2, imageUrl: "/2.gif", title: 'AUTHENTIC RELATIONSHIPS' },
-  { id: 3, imageUrl: "/sucess.gif", title: 'SUCCESS THROUGH COMMUNICATION' },
-  { id: 4, imageUrl: "/4.gif", title: 'STRATEGIC SOLUTIONS' },
-  { id: 5, imageUrl: "/5.gif", title: 'TRUSTWORTHINESS' },
-  { id: 6, imageUrl: "/6.gif", title: 'ELEVATE EVERY EXPERIENCE' },
-  { id: 7, imageUrl: "/7.gif", title: 'RELENTLESS OPTIMIZATION' },
+  { id: 1, imageUrl: "/1.gif", title: 'CRAFTING YOUR VISION' },
+  { id: 2, imageUrl: "/2.gif", title: 'SHAPE YOUR IDEAS' },
+  { id: 3, imageUrl: "/sucess.gif", title: 'CRAFTING DYNAMIC DESIGNS' },
+  { id: 4, imageUrl: "/4.gif", title: 'CANVAS OF CREATION' },
+  { id: 5, imageUrl: "/5.gif", title: `SHAPING TOMORROWS'S PATH` },
+  { id: 6, imageUrl: "/6.gif", title: 'HARMONIZING DESIGNS' },
+  { id: 7, imageUrl: "/7.gif", title: 'EMPOWERING CREATIVITY' },
 ];
 
-const Whyus = () => {
+const Essence = () => {
   return (
     <>
       <Container >
-        <Heading heading={"WHY WE"} />
+        <Heading heading={"THE ESSENCE OF OUR PURPOSE"} />
         <div className="outercomb pt-3 pb-5">
           <ul className="honeycomb">
             {honeycombData.map(item => (
@@ -34,4 +34,4 @@ const Whyus = () => {
   );
 }
 
-export default Whyus;
+export default Essence;

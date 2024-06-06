@@ -3,9 +3,9 @@ import ContactForm from '@/landingpagesections/ContactForm'
 import Counter from '@/landingpagesections/Counter'
 import Hero from '@/landingpagesections/Hero'
 import Offer from '@/landingpagesections/Offer'
-import Whyus from '@/landingpagesections/Whyus'
 import Vision from '@/landingpagesections/Vision'
 import FeaturedDesigns from '@/landingpagesections/FeaturedDesigns'
+import Essence from '@/landingpagesections/ESSENCE'
 
 const page = () => {
   return (
@@ -15,7 +15,7 @@ const page = () => {
       <Counter />
       <Offer />
       <FeaturedDesigns/>
-      <Whyus />
+      <Essence/>
       <ContactForm />
 
     </>

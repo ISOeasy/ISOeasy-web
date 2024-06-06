@@ -59,7 +59,7 @@ const ContactForm = () => {
     return (
         <section className="mt-4pb-3">
             <Container className="pt-2 pb-4">
-                <Heading heading={"GET IN TOUCH"} />
+                <Heading heading={"GET CONNECT WITH US"} />
                 <Col xs={12} lg={9} className="mx-auto">
                     <Card
                         className="px-5 py-4 border-0 contact-card"

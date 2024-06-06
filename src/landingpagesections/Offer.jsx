@@ -4,27 +4,27 @@ import { Col, Container, Row } from 'react-bootstrap';
 import Heading from '../components/shared/Heading';
 const capabilitiesData = [
   {
-    title: 'Web Development',
+    title: 'Graphics',
     description: 'Craft visually stunning and interactive websites that leave a lasting impression. ',
     image: "/web.gif"
   },
   {
-    title: 'Mobile App Development',
+    title: 'Custom Shapes',
     image: "/mobile.gif",
     description: 'Transform your unique app ideas into user-friendly and engaging mobile applications. ',
   },
   {
-    title: 'UI/UX Design',
+    title: 'Upload',
     image: "/ui.gif",
     description: 'Blend aesthetics with user-friendly functionality for designs that stand out. ',
   },
   {
-    title: 'Cloud & Devops Services',
+    title: 'Add Tables',
     image: "/cloud.gif",
     description: 'Use the strength of the cloud for smart solutions, making sure everything runs smoothly. ',
   },
   {
-    title: 'Game Development',
+    title: 'Export Options',
     image: "/game.gif",
     description: 'Dive your audience into exciting gaming adventures with our skilled game development services. ',
   },
@@ -41,7 +41,7 @@ const Offer = () => {
   return (
     <>
       <Container className="container py-5">
-        <Heading heading={"SOME OF OUR SERVICES"} />
+        <Heading heading={"OUR PROVISIONS"} />
         <Row className="justify-content-around">
           {capabilitiesData.map((capability, index) => (
             <Col xs={12} md={6} lg={4} className='py-3' key={index}>
