@@ -1,6 +1,7 @@
 import React from 'react';
 import FeaturedCard from '../landingpage/FeaturedCard';
 import { Col, Container, Row } from 'react-bootstrap';
+import Heading from '../shared/Heading';
 const capabilitiesData = [
   {
     title: 'Web Development',
@@ -40,11 +41,7 @@ const Offer = () => {
   return (
     <>
       <Container className="container py-5">
-
-        <div className="capabilities pt-3 pb-5">
-          <h2>SOME OF OUR SERVICES</h2>
-        </div>
-
+        <Heading heading={"SOME OF OUR SERVICES"} />
         <Row className="justify-content-around">
           {capabilitiesData.map((capability, index) => (
             <Col xs={12} md={6} lg={4} className='py-3' key={index}>

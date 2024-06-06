@@ -1,6 +1,7 @@
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import DesignsCard from '../landingpage/DesignsCard';
+import Heading from '../shared/Heading';
 const projects = [
   {
     title: 'Dobie Dog',
@@ -45,10 +46,9 @@ const projects = [
 const Work = () => {
   return (
     <>
-      <div className="container pt-5 pb-2">
-        <div className="capabilities pt-3 pb-5">
-          <h2>SOME OF OUR WORK</h2>
-        </div>
+      <Container className="pt-5 pb-2">
+        <Heading heading={"Some of Our Work"} />
+
         <Row>
           {projects.map((projects, index) => (
             <Col xs={12} md={6} lg={4} key={index}>
@@ -64,7 +64,7 @@ const Work = () => {
           ))}
         </Row>
 
-      </div>
+      </Container>
     </>
   )
 }
