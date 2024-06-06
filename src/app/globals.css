@@ -5,6 +5,9 @@
 html{
   scroll-behavior: smooth;
 }
+.herobg{
+  background-color: var(--primary-color);
+}
 
 .navbar {
   transition: background-color 0.3s ease-in-out;

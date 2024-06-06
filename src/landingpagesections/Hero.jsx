@@ -14,7 +14,7 @@ export default function Hero() {
     return (
         <>
         <section id="home">
-        <div className="py-5" style={{ background: "#002338" }}>
+        <div className="py-5 herobg" >
                 <div id="particles-container" >
                     <Particles
                         id="tsparticles"
