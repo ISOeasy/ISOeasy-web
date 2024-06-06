@@ -14,7 +14,7 @@ const Footer = () => {
         padding: "20px 0",
         color: "white"
     };
- 
+
     const services = [
 
         'Web Development',
