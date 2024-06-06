@@ -1,12 +1,30 @@
 :root {
   --primary-color: #002338;
-  --secondary-color: #ffb300;
+  --secondary-color: #d7ba89;
 }
 html{
   scroll-behavior: smooth;
 }
 .herobg{
   background-color: var(--primary-color);
+}
+.herosecond{
+  color: var(--secondary-color);
+}
+.btn-mailing{
+  background-color: transparent;
+  border: 1px solid var(--secondary-color) !important;
+  padding: 10px 20px !important;
+  color: var(--secondary-color) !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.2;
+}
+
+.btn-mailing:hover{
+  background-color:  var(--secondary-color) !important;
+  border: 1px solid var(--secondary-color) !important;
+  padding: 10px 20px !important;
+  color: black!important;
 }
 
 .navbar {
@@ -486,4 +504,9 @@ html{
   background-color: transparent !important;
   color: white !important;
 
+}
+
+
+.coming-soon{
+  font-size: 22px;
 }

@@ -1,17 +1,8 @@
 "use client";
-import Image from "next/image";
-import React, { useRef, useState } from "react";
-import emailjs from "emailjs-com";
-import {
-    Container,
-    Card,
-    Form,
-    Row,
-    Col,
-    Button,
-    Alert,
-} from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Card, Form, Row, Col, Button, Spinner } from "react-bootstrap";
 import Heading from "../components/shared/Heading";
+import ComingSoon from "@/components/landingpagecomponents/ComingSoonModal";
 
 const ContactForm = () => {
     const [name, setName] = useState("");
@@ -21,52 +12,53 @@ const ContactForm = () => {
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const [modalShow, setModalShow] = useState(false);
 
-    const form = useRef();
-
-    const sendEmail = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
         setLoading(true);
-        emailjs
-            .sendForm(
-                "",
-                "",
-                form.current,
-                ""
-            )
-            .then((result) => {
-                console.log(result.text);
-                setSubmitted(true);
-                setName("");
-                setEmail("");
-                setSubject("");
-                setPhone("");
-                setMessage("");
-                setLoading(false);
 
-                setTimeout(() => {
-                    setSubmitted(false);
-                }, 10000);
-            })
-            .catch((error) => {
-                console.log(error.text);
-                setSubmitted(false);
-                setLoading(false);
+        try {
+            await fetch("https://isopipeline-default-rtdb.firebaseio.com/form.json", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    subject,
+                    phone,
+                    message,
+                })
             });
+            setSubmitted(true);
+            setModalShow(true);
+
+            // Clear the form fields
+            setName("");
+            setEmail("");
+            setSubject("");
+            setPhone("");
+            setMessage("");
+
+
+            setSubmitted(false);
+
+        } catch (error) {
+            console.error("Error submitting form:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <section className="mt-4pb-3">
+        <section className="mt-4 pb-3" id="contact">
             <Container className="pt-2 pb-4">
                 <Heading heading={"GET CONNECT WITH US"} />
                 <Col xs={12} lg={9} className="mx-auto">
-                    <Card
-                        className="px-5 py-4 border-0 contact-card"
-
-                    >
-                        <Form className="py-4 text-center" ref={form} onSubmit={sendEmail}>
-
+                    <Card className="px-5 py-4 border-0 contact-card">
+                        <Form className="py-4 text-center" onSubmit={handleSubmit}>
                             <Row>
                                 <Col lg={6}>
                                     <Form.Group className="mb-3">
@@ -126,20 +118,14 @@ const ContactForm = () => {
                                     name="message"
                                 />
                             </Form.Group>
-                            <Button variant="outline-warning" type="submit"
-                                disabled={loading}>{loading ? "..." : submitted ? "Submitted" : "Submit"}</Button>
-
+                            <Button variant="mailing" type="submit" disabled={loading || submitted}>
+                                {loading ? <Spinner animation="border" size="sm" /> : submitted ? "Submitted" : "Submit"}
+                            </Button>
                         </Form>
-                        {submitted && (
-                            <Alert variant="success" className="mt-3 text-white">
-                                Thank you for taking the time to submit the form, we will be
-                                reaching out to you very soon.
-                            </Alert>
-                        )}
                     </Card>
                 </Col>
-
             </Container>
+            <ComingSoon show={modalShow} handleClose={() => setModalShow(false)} />
         </section>
     );
 };

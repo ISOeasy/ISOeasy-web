@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import SidebarNavlinks from './SidebarNavlinks';
-
+import logo from "../../assets/logo.png"
 const navItems = [
     { href: '#home', label: 'Home' },
     { href: '#vision', label: 'Vision' },
@@ -50,19 +50,19 @@ const Header = () => {
 
     const navbarStyle = {
         backgroundColor: scrolling ? '#002338' : 'rgba(0, 0, 0, 0.4)',
-        borderBottom: scrolling ? '3px solid #FFB300' : 'none',
+        borderBottom: scrolling ? '3px solid #D7BA89' : 'none',
     };
 
     return (
         <>
             <Navbar expanded={false} expand="lg" fixed="top" variant="dark" style={navbarStyle} className={scrolling ? 'scrolled' : ''}>
                 <Container>
-                    <Link href="/" passHref className='text-decoration-none'>
-                        <Navbar.Brand>
-                            <div style={{ width: "60px" }}>
-                                <Image src="/logo.png" width={160} height={60} alt='logo' />
-                            </div>
-                        </Navbar.Brand>
+                    <Link href="#home" passHref className='text-decoration-none'>
+
+                        <div >
+                            <Image src={logo} width={160} height={60} alt='logo' />
+                        </div>
+
                     </Link>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={handleOffcanvasShow} />
                     <Navbar.Collapse id="responsive-navbar-nav">
@@ -79,8 +79,8 @@ const Header = () => {
                                 </Nav.Link>
                             ))}
                         </Nav>
-                        <Link href='/contact' passHref>
-                            <Button variant="outline-warning">Join Mailing List</Button>
+                        <Link href='#contact' passHref>
+                            <Button variant="mailing">Join Mailing List</Button>
                         </Link>
                     </Navbar.Collapse>
                 </Container>
