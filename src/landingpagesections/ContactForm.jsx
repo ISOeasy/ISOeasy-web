@@ -11,7 +11,7 @@ import {
     Button,
     Alert,
 } from "react-bootstrap";
-import Heading from "../shared/Heading";
+import Heading from "../components/shared/Heading";
 
 const ContactForm = () => {
     const [name, setName] = useState("");
@@ -30,10 +30,10 @@ const ContactForm = () => {
         setLoading(true);
         emailjs
             .sendForm(
-                "service_1t6fgv5",
-                "template_3i8pdpb",
+                "",
+                "",
                 form.current,
-                "-8v3FujLGpo7401k8"
+                ""
             )
             .then((result) => {
                 console.log(result.text);

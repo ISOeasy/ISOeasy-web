@@ -1,7 +1,7 @@
 import React from 'react';
-import FeaturedCard from '../landingpage/FeaturedCard';
+import FeaturedCard from '../components/landingpagecomponents/FeaturedCard';
 import { Col, Container, Row } from 'react-bootstrap';
-import Heading from '../shared/Heading';
+import Heading from '../components/shared/Heading';
 const capabilitiesData = [
   {
     title: 'Web Development',

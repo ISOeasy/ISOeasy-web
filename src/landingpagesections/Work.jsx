@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import DesignsCard from '../landingpage/DesignsCard';
-import Heading from '../shared/Heading';
+import DesignsCard from '../components/landingpagecomponents/DesignsCard';
+import Heading from '../components/shared/Heading';
 const projects = [
   {
     title: 'Dobie Dog',

@@ -1,13 +1,11 @@
-import Hero from '@/components/Home/Hero'
 import React from 'react'
-import "./home.css"
-import Offer from '@/components/Home/Offer'
-import Whyus from '@/components/Home/Whyus'
-import Who from '@/components/Home/Who'
-import Counter from '@/components/Home/Counter'
-import Work from '@/components/Home/Work'
-import ContactForm from '@/components/Home/ContactForm'
-
+import ContactForm from '@/landingpagesections/ContactForm'
+import Counter from '@/landingpagesections/Counter'
+import Hero from '@/landingpagesections/Hero'
+import Offer from '@/landingpagesections/Offer'
+import Who from '@/landingpagesections/Who'
+import Whyus from '@/landingpagesections/Whyus'
+import Work from '@/landingpagesections/Work'
 
 const page = () => {
   return (
@@ -18,7 +16,7 @@ const page = () => {
       <Offer />
       <Work />
       <Whyus />
-      <ContactForm/>
+      <ContactForm />
 
     </>
   )

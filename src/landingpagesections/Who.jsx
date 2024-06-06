@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import Heading from '../shared/Heading'
+import Heading from '../components/shared/Heading'
 const Who = () => {
     return (
         <>

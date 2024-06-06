@@ -20,5 +20,4 @@ const FeaturedCard = ({ image, title, description }) => {
         </>
     )
 }
-
 export default FeaturedCard

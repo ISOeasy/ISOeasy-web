@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
-import CounterCards from "../landingpage/CounterCards"
+import CounterCards from "../components/landingpagecomponents/CounterCards"
 const Counter = () => {
     const counters = [
         { image: '/completed.gif', end: 100, suffix: '+', label: 'PROJECT' },
@@ -9,7 +9,6 @@ const Counter = () => {
         { image: '/commits.gif', end: 1000, suffix: '+', label: 'CLIENTS' },
         { image: '/reviews.gif', end: 500, suffix: '+', label: 'REVIEWS' }
     ];
-
     return (
 
         <div className="counterbg py-5" >

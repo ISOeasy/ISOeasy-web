@@ -1,4 +1,4 @@
-import './globals.css';
+import "./globals.css"
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import localFont from 'next/font/local';
 import "../../node_modules/animate.css";

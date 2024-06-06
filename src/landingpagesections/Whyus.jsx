@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Heading from '../shared/Heading';
+import Heading from '../components/shared/Heading';
 import { Container } from 'react-bootstrap';
 const honeycombData = [
   { id: 1, imageUrl: "/1.gif", title: 'FASTEST RESPONSE TIMES' },
