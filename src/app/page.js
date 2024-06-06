@@ -6,6 +6,7 @@ import Whyus from '@/components/Home/Whyus'
 import Who from '@/components/Home/Who'
 import Counter from '@/components/Home/Counter'
 import Work from '@/components/Home/Work'
+import ContactForm from '@/components/Home/ContactForm'
 
 
 const page = () => {
@@ -17,6 +18,7 @@ const page = () => {
       <Offer />
       <Work />
       <Whyus />
+      <ContactForm/>
 
     </>
   )

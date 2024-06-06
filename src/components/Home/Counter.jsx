@@ -13,11 +13,8 @@ const Counter = () => {
     return (
 
         <div className="counterbg py-5" >
-
             <Container>
-
                 <Row>
-
                     {counters.map((counter, index) => (
                         <Col key={index} xs={12} md={6} lg={3}>
 
@@ -30,7 +27,6 @@ const Counter = () => {
 
                         </Col>
                     ))}
-
                 </Row>
             </Container>
 

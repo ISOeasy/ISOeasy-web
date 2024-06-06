@@ -53,12 +53,9 @@ const Work = () => {
           {projects.map((projects, index) => (
             <Col xs={12} md={6} lg={4} key={index}>
               <DesignsCard
-
                 image={projects.image}
                 title={projects.title}
                 description={projects.description}
-
-
               />
             </Col>
           ))}

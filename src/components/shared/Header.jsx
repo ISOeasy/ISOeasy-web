@@ -81,7 +81,7 @@ const Header = () => {
                             ))}
                         </Nav>
                         <Link href='/contact' passHref>
-                            <Button variant="outline-warning">Hire Us</Button>
+                            <Button variant="outline-warning">Join Our Mailing List</Button>
                         </Link>
                     </Navbar.Collapse>
                 </Container>
