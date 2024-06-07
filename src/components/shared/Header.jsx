@@ -1,52 +1,56 @@
 "use client"
-import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
-import SidebarNavlinks from './SidebarNavlinks';
-import logo from "../../assets/logo.png"
-const navItems = [
-    { href: '#home', label: 'Home' },
-    { href: '#vision', label: 'Vision' },
-    { href: '#', label: 'Services' },
-    { href: '#', label: 'Some of our features' },
-];
+import { usePathname } from 'next/router';
+import Link from 'next/link';
+import Image from 'next/image';
+import logo from "../../assets/logo.png";
+import { navItems } from './NavItems';
 
 const Header = () => {
     const [scrolling, setScrolling] = useState(false);
-    const [showOffcanvas, setShowOffcanvas] = useState(false);
     const [activeButton, setActiveButton] = useState();
-    const pathname = usePathname();
-
-    const handleClick = (index) => {
-        setActiveButton(index);
-    };
-
-    const handleOffcanvasClose = () => setShowOffcanvas(false);
-    const handleOffcanvasShow = () => setShowOffcanvas(true);
+    // const pathname = usePathname();
+    const headerRef = useRef(null);
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const initialActiveButton = navItems.findIndex(item => item.href === pathname);
-            if (initialActiveButton !== -1) {
-                setActiveButton(initialActiveButton);
+        const handleScroll = () => {
+            if (window.scrollY > 60) {
+                setScrolling(true);
+            } else {
+                setScrolling(false);
             }
-            const handleScroll = () => {
-                if (window.scrollY > 60) {
-                    setScrolling(true);
-                } else {
-                    setScrolling(false);
-                }
-            };
-            handleScroll();
-            window.addEventListener('scroll', handleScroll);
+        };
 
-            return () => {
-                window.removeEventListener('scroll', handleScroll);
-            };
-        }
-    }, [pathname]);
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        const index = navItems.findIndex(item => item.href === `#${id}`);
+                        if (index !== -1) {
+                            setActiveButton(index);
+                        }
+                    }
+                });
+            },
+            {
+                rootMargin: '-50% 0px -50% 0px',
+            }
+        );
+
+        document.querySelectorAll('section[id]').forEach((section) => {
+            observer.observe(section);
+        });
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+
+        return () => {
+            observer.disconnect();
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     const navbarStyle = {
         backgroundColor: scrolling ? '#002338' : 'rgba(0, 0, 0, 0.4)',
@@ -58,13 +62,11 @@ const Header = () => {
             <Navbar expanded={false} expand="lg" fixed="top" variant="dark" style={navbarStyle} className={scrolling ? 'scrolled' : ''}>
                 <Container>
                     <Link href="#home" passHref className='text-decoration-none'>
-
-                        <div >
+                        <div>
                             <Image src={logo} width={160} height={60} alt='logo' />
                         </div>
-
                     </Link>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={handleOffcanvasShow} />
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="m-auto">
                             {navItems.map((item, index) => (
@@ -72,7 +74,6 @@ const Header = () => {
                                     key={index}
                                     href={item.href}
                                     className={`nav-link-wrapper mx-3 ${activeButton === index ? 'activenav' : ''}`}
-                                    onClick={() => handleClick(index)}
                                 >
                                     {item.label}
                                     <div className="underline"></div>
@@ -85,13 +86,6 @@ const Header = () => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <SidebarNavlinks
-                navItems={navItems}
-                showOffcanvas={showOffcanvas}
-                handleOffcanvasClose={handleOffcanvasClose}
-                activeButton={activeButton}
-                handleClick={handleClick}
-            />
         </>
     );
 };

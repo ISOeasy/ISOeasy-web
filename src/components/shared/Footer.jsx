@@ -5,6 +5,7 @@ import moment from 'moment';
 import Image from 'next/image';
 import { Container, Row, Col } from 'react-bootstrap';
 import logo from "../../assets/logo.png"
+import { navItems } from './NavItems';
 const Footer = () => {
     const currentYear = moment().format('YYYY');
 
@@ -24,12 +25,6 @@ const Footer = () => {
         'Saas Service',
         'Graphic Design'
     ]
-    const navItems = [
-        { href: '#', label: 'Home' },
-        { href: '#', label: 'Who We Are' },
-        { href: '#', label: 'Services' },
-        { href: '#', label: 'Some of our features' },
-    ];
 
     const sociallinks = [
         {
@@ -80,13 +75,14 @@ const Footer = () => {
                         </Col>
                         <Col lg={2}>
                             <h5 style={headings}>PAGES</h5>
-                            {navItems.map((page, index) => (
+                            {navItems.slice(0, 5).map((page, index) => (
                                 <div className='py-2' key={page}>
                                     <Link className="text-white" href={page.href} style={{ textDecoration: "none" }}>
                                         {page.label}
                                     </Link>
                                 </div>
                             ))}
+
                         </Col>
                         <Col lg={3}>
                             <h5 style={headings}>SOCIALS</h5>
