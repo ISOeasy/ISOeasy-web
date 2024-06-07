@@ -18,12 +18,12 @@ const Footer = () => {
 
     const services = [
 
-        'Web Development',
-        'App Development',
-        'Project Management',
-        'Blockchain Development',
-        'Saas Service',
-        'Graphic Design'
+        'Graphics',
+        'Custom Shapes',
+        'Self Uploads',
+        'Tables',
+        'Export Options',
+        'Actions Controls'
     ]
 
     const sociallinks = [
