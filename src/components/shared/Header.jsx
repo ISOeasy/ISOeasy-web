@@ -10,7 +10,7 @@ import Sidebar from './Sidebar';
 const Header = () => {
     const [scrolling, setScrolling] = useState(false);
     const [activeButton, setActiveButton] = useState();
-    const [showOffcanvas, setShowOffcanvas] = useState(false); // State for Offcanvas visibility
+    const [showOffcanvas, setShowOffcanvas] = useState(false); 
 
     const handleOffcanvasClose = () => setShowOffcanvas(false);
 

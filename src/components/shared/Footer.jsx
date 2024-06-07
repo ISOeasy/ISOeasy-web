@@ -16,15 +16,7 @@ const Footer = () => {
         color: "white"
     };
 
-    const services = [
 
-        'Graphics',
-        'Custom Shapes',
-        'Self Uploads',
-        'Tables',
-        'Export Options',
-        'Actions Controls'
-    ]
 
     const sociallinks = [
         {
@@ -66,15 +58,10 @@ const Footer = () => {
                             <Image src={logo} width={0} height={0} style={{ width: "100%", height: "100%" }} alt='footerlogo' />
                         </Col>
                         <Col lg={3}>
-                            <h5 style={headings}>WE OFFER</h5>
-                            {services.map(service => (
-                                <div className='py-2' key={service}>
-                                    <span className="text-white" style={{ textDecoration: "none" }}>{service}</span>
-                                </div>
-                            ))}
+
                         </Col>
                         <Col lg={2}>
-                            <h5 style={headings}>PAGES</h5>
+                            <h5 style={headings}>MENU</h5>
                             {navItems.slice(0, 5).map((page, index) => (
                                 <div className='py-2' key={page}>
                                     <Link className="text-white" href={page.href} style={{ textDecoration: "none" }}>
@@ -85,9 +72,9 @@ const Footer = () => {
 
                         </Col>
                         <Col lg={3}>
-                            <h5 style={headings}>SOCIALS</h5>
+                            <h5 style={headings}>Reach Out</h5>
                             <div className="sociallinks">
-                                <Row className="pb-3">
+                                {/* <Row className="pb-3">
 
                                     {sociallinks.map((social, index) => (
                                         <Col key={index} xs={2}>
@@ -98,7 +85,7 @@ const Footer = () => {
                                             </div>
                                         </Col>
                                     ))}
-                                </Row>
+                                </Row> */}
                                 <div>
                                     <Row className="py-2">
                                         <Col lg={2} xs={1} className="">

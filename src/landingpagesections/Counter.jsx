@@ -2,10 +2,10 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import CounterCards from "../components/landingpagecomponents/CounterCards"
-import projects from "../assets/counter/projects.svg"
+import projects from "../assets/counter/tick.svg"
 import drawing from "../assets/counter/drawing.svg"
-import client from "../assets/counter/clients.svg"
-import reviews from "../assets/counter/reviews.svg"
+import client from "../assets/counter/client.svg"
+import reviews from "../assets/counter/star.svg"
 const Counter = () => {
     const counters = [
         { image: projects, end: 100, suffix: '+', label: 'PROJECT' },
@@ -20,10 +20,6 @@ const Counter = () => {
                 <Row>
                     {counters.map((counter, index) => (
                         <Col key={index} xs={12} md={6} lg={3}>
-                            
-
-
-
                             <CounterCards
                                 image={counter.image}
                                 text={counter.label}
