@@ -3,7 +3,7 @@ import React from 'react'
 const Heading = ({heading}) => {
     return (
         <>
-            <div className="capabilities py-4 ">
+            <div className="capabilities py-3">
                 <h2>{heading}</h2>
             </div>
         </>

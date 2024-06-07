@@ -119,7 +119,7 @@ const Footer = () => {
                                         </Col>
                                         <Col lg={10} xs={10}>
                                             <div className="location text-white">
-                                                <a style={{ textDecoration: "none", color: "white" }} href="mailto:isopipeline@gmail.com">isopipeline@gmail.com</a>
+                                                <a style={{ textDecoration: "none", color: "white" }} href="mailto:isoeasy@gmail.com">isoeasy@gmail.com</a>
                                             </div>
                                         </Col>
                                     </Row>
@@ -130,7 +130,7 @@ const Footer = () => {
                 </Container>
                 <div className="footer-bottom py-4 text-center" >
                     <Container>
-                        &copy; {currentYear} Iso Pipelines. All rights reserved.
+                        &copy; {currentYear} Iso Easy. All rights reserved.
                     </Container>
                 </div>
             </footer>

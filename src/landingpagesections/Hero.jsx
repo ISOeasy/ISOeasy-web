@@ -14,7 +14,7 @@ export default function Hero() {
     return (
         <>
             <section id="home">
-                <div className="py-5 herobg" >
+                <div className="pt-5 herobg" >
                     <div id="particles-container" >
                         <Particles
                             id="tsparticles"
@@ -97,7 +97,7 @@ export default function Hero() {
 
                             <div className="header">
                                 <h1 >
-                                    ISO <span className="herosecond">PIPELINE</span>
+                                    ISO <span className="herosecond">EASY</span>
                                 </h1>
 
 
@@ -107,7 +107,7 @@ export default function Hero() {
 
                                     'Create stunning graphics with ease and precision.',
                                     1000,
-                                    'Transform your ideas into reality with ISO Pipelines. ',
+                                    'Transform your ideas into reality with ISO Easy. ',
                                     1000,
                                     'Customize every detail to fit your unique needs.',
                                     1000,

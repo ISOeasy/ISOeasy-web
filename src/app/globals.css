@@ -2,16 +2,16 @@
   --primary-color: #002338;
   --secondary-color: #d7ba89;
 }
-html{
+html {
   scroll-behavior: smooth;
 }
-.herobg{
+.herobg {
   background-color: var(--primary-color);
 }
-.herosecond{
+.herosecond {
   color: var(--secondary-color);
 }
-.btn-mailing{
+.btn-mailing {
   background-color: transparent;
   border: 1px solid var(--secondary-color) !important;
   padding: 10px 20px !important;
@@ -20,11 +20,11 @@ html{
   letter-spacing: 1.2;
 }
 
-.btn-mailing:hover{
-  background-color:  var(--secondary-color) !important;
+.btn-mailing:hover {
+  background-color: var(--secondary-color) !important;
   border: 1px solid var(--secondary-color) !important;
   padding: 10px 20px !important;
-  color: black!important;
+  color: black !important;
 }
 
 .navbar {
@@ -164,6 +164,9 @@ html{
 }
 
 @media only screen and (max-width: 576px) {
+  #tsparticles {
+    height: 75vh;
+  }
   .text-container {
     position: absolute;
     top: 40% !important;
@@ -187,7 +190,7 @@ html{
 }
 
 #tsparticles {
-  height: 75vh;
+  height: 60vh;
 }
 
 #particles-container {
@@ -483,30 +486,32 @@ html{
 .contact-card {
   background-color: var(--primary-color) !important;
   border-radius: 8px !important;
-  box-shadow: 4px 4px 4px 4px rgba(0, 35, 56, 0.1)  !important;
-
+  box-shadow: 4px 4px 4px 4px rgba(0, 35, 56, 0.1) !important;
 }
-.contact-card input{
+.contact-card input {
   background-color: transparent !important;
   color: white !important;
-
 }
-.contact-card input::placeholder{
+.contact-card input::placeholder {
   color: grey !important;
-
 }
-.contact-card textarea::placeholder{
+.contact-card textarea::placeholder {
   color: grey !important;
-
 }
-.contact-card textarea{
-
+.contact-card textarea {
   background-color: transparent !important;
   color: white !important;
-
 }
 
-
-.coming-soon{
+.coming-soon {
   font-size: 22px;
+}
+
+.btn-vision {
+  background-color: var(--primary-color) !important;
+  border: 1px solid var(--primary-color) !important;
+  padding: 10px 20px !important;
+  color: var(--secondary-color) !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.2;
 }
