@@ -11,8 +11,8 @@ import actions from "../assets/flipcards/actions.png"
 
 const capabilitiesData = [
   {
-    title: 'Graphics',
-    description: `Enhance pipeline design with visually striking graphics tailored to your project's needs.`,
+    title: 'Multi-Project Management',
+    description: `Handle multiple drawings and projects  effortlessly.`,
     image: graphics
   },
   {
@@ -21,9 +21,9 @@ const capabilitiesData = [
     description: 'Craft unique pipeline layouts using our diverse range of customizable shapes. ',
   },
   {
-    title: 'Upload',
+    title: 'Continuous Advancement',
     image: upload,
-    description: 'Empower users to seamlessly incorporate their own data and assets into the pipeline design process. ',
+    description: 'Preserve your progress effortlessly with the ability to save and continue your work on different drawings and projects.',
   },
   {
     title: 'Add Tables',
@@ -31,9 +31,9 @@ const capabilitiesData = [
     description: 'Effortlessly integrate tables to organize and present key information within your pipeline design.',
   },
   {
-    title: 'Export Options',
+    title: 'Export PDF',
     image: exporticons,
-    description: 'Flexible export options ensure easy preview of the design.',
+    description: 'Export individual drawings or whole projects in a single pdf ',
   },
   {
     title: 'Action Controls',
@@ -46,7 +46,7 @@ const Provisions = () => {
   return (
     <section id='provisions'>
       <Container className="container py-5">
-        <Heading heading={"OUR PROVISIONS"} />
+        <Heading heading={"OUR ASSISTANCE"} />
         <Row className="justify-content-around">
           {capabilitiesData.map((capability, index) => (
             <Col xs={12} md={6} lg={4} className='py-3' key={index}>

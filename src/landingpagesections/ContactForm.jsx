@@ -55,7 +55,7 @@ const ContactForm = () => {
     return (
         <section className="mt-4 pb-3" id="contact">
             <Container className="pt-2 pb-4">
-                <Heading heading={"GET CONNECT WITH US"} />
+                <Heading heading={"JOIN OUR MAILING LIST"} />
                 <Col xs={12} lg={9} className="mx-auto">
                     <Card className="px-5 py-4 border-0 contact-card">
                         <Form className="py-4 text-center" onSubmit={handleSubmit}>
