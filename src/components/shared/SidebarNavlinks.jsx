@@ -1,6 +1,5 @@
 import React from 'react';
 import { Offcanvas, Nav } from 'react-bootstrap';
-import Link from 'next/link';
 
 const SidebarNavlinks = ({ navItems, showOffcanvas, handleOffcanvasClose, activeButton, handleClick }) => {
     return (

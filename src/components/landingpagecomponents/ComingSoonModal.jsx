@@ -1,4 +1,3 @@
-// components/SubmissionModal.js
 import Image from 'next/image';
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';

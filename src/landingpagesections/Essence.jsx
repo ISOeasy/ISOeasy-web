@@ -2,13 +2,13 @@ import React from 'react';
 import Image from 'next/image';
 import Heading from '../components/shared/Heading';
 import { Container } from 'react-bootstrap';
-import vision from "./../assets/vision.jpeg"
-import shape from "./../assets/shape.jpeg"
-import dynamic from "./../assets/dynamic.jpeg"
-import canvas from "./../assets/canvas.jpeg"
-import path from "./../assets/path.jpeg"
-import harmonizing from "./../assets/harmonizing.jpeg"
-import empowering from "./../assets/empowering.jpeg"
+import vision from "../assets/essence/vision.jpeg"
+import shape from "../assets/essence/shape.jpeg"
+import dynamic from "../assets/essence/dynamic.jpeg"
+import canvas from "../assets/essence/canvas.jpeg"
+import path from "../assets/essence/path.jpeg"
+import harmonizing from "../assets/essence/harmonizing.jpeg"
+import empowering from "../assets/essence/empowering.jpeg"
 
 const honeycombData = [
   { id: 1, imageUrl: vision, title: 'CRAFTING YOUR VISION' },

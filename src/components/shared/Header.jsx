@@ -1,7 +1,6 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
-import { usePathname } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 import logo from "../../assets/logo.png";
@@ -10,8 +9,6 @@ import { navItems } from './NavItems';
 const Header = () => {
     const [scrolling, setScrolling] = useState(false);
     const [activeButton, setActiveButton] = useState();
-    // const pathname = usePathname();
-    const headerRef = useRef(null);
 
     useEffect(() => {
         const handleScroll = () => {
