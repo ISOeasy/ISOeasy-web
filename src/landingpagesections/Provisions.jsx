@@ -44,7 +44,7 @@ const capabilitiesData = [
 
 const Provisions = () => {
   return (
-    <section id='provisions'>
+    <section id='assistance'>
       <Container className="container py-5">
         <Heading heading={"OUR ASSISTANCE"} />
         <Row className="justify-content-around">

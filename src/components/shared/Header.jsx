@@ -64,7 +64,10 @@ const Header = () => {
                 <Container>
                     <Link href="#home" passHref className='text-decoration-none'>
                         <div>
-                            <Image src={logo} width={160} height={60} alt='logo' />
+                            {/* <Image src={logo} width={160} height={60} alt='logo' /> */}
+                        </div>
+                        <div>
+                            <h3 className='logotext mt-2'>ISO EASY</h3>
                         </div>
                     </Link>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setShowOffcanvas(!showOffcanvas)} /> 
