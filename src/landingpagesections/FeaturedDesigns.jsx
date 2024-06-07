@@ -41,7 +41,8 @@ const projects = [
 const FeaturedDesigns = () => {
   return (
     <>
-      <Container className="pt-5 pb-2">
+    <section id='featured_design'>
+    <Container className="pt-5 pb-2">
         <Heading heading={"Our Featured Designs"} />
 
         <Row>
@@ -57,6 +58,8 @@ const FeaturedDesigns = () => {
         </Row>
 
       </Container>
+    </section>
+    
     </>
   )
 }

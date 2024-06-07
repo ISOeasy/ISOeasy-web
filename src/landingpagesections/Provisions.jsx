@@ -37,27 +37,30 @@ const capabilitiesData = [
 
 ];
 
-const Offer = () => {
+const Provisions = () => {
   return (
     <>
-      <Container className="container py-5">
-        <Heading heading={"OUR PROVISIONS"} />
-        <Row className="justify-content-around">
-          {capabilitiesData.map((capability, index) => (
-            <Col xs={12} md={6} lg={4} className='py-3' key={index}>
-              <FeaturedCard
-                image={capability.image}
-                title={capability.title}
-                description={capability.description}
+      <section id='provisions'>
+        <Container className="container py-5">
+          <Heading heading={"OUR PROVISIONS"} />
+          <Row className="justify-content-around">
+            {capabilitiesData.map((capability, index) => (
+              <Col xs={12} md={6} lg={4} className='py-3' key={index}>
+                <FeaturedCard
+                  image={capability.image}
+                  title={capability.title}
+                  description={capability.description}
 
-              />
-            </Col>
-          ))}
-        </Row>
+                />
+              </Col>
+            ))}
+          </Row>
 
-      </Container>
+        </Container>
+      </section>
+
     </>
   );
 };
 
-export default Offer;
+export default Provisions;

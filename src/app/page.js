@@ -2,10 +2,10 @@ import React from 'react'
 import ContactForm from '@/landingpagesections/ContactForm'
 import Counter from '@/landingpagesections/Counter'
 import Hero from '@/landingpagesections/Hero'
-import Offer from '@/landingpagesections/Offer'
 import Vision from '@/landingpagesections/Vision'
 import FeaturedDesigns from '@/landingpagesections/FeaturedDesigns'
 import Essence from '@/landingpagesections/Essence'
+import Provisions from '@/landingpagesections/Provisions'
 
 const page = () => {
   return (
@@ -13,7 +13,7 @@ const page = () => {
       <Hero />
       <Vision />
       <Counter />
-      <Offer />
+      <Provisions/>
       <FeaturedDesigns/>
       <Essence/>
       <ContactForm />
