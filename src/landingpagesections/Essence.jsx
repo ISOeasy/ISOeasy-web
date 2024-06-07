@@ -1,43 +1,44 @@
 import React from 'react';
 import Image from 'next/image';
-import vision from "../assets/vision.jpeg";
+import Heading from '../components/shared/Heading';
+import { Container } from 'react-bootstrap';
+import vision from "./../assets/vision.jpeg"
+import shape from "./../assets/shape.jpeg"
+import dynamic from "./../assets/dynamic.jpeg"
+import canvas from "./../assets/canvas.jpeg"
+import path from "./../assets/path.jpeg"
+import harmonizing from "./../assets/harmonizing.jpeg"
+import empowering from "./../assets/empowering.jpeg"
 
 const honeycombData = [
-  { id: 1, imageUrl: vision, title: 'FASTEST RESPONSE TIMES' },
-  { id: 2, imageUrl: "/images/2.gif", title: 'AUTHENTIC RELATIONSHIPS' },
-  { id: 3, imageUrl: "/images/sucess.gif", title: 'SUCCESS THROUGH COMMUNICATION' },
-  { id: 4, imageUrl: "/images/4.gif", title: 'STRATEGIC SOLUTIONS' },
-  { id: 5, imageUrl: "/images/5.gif", title: 'TRUSTWORTHINESS' },
-  { id: 6, imageUrl: "/images/6.gif", title: 'ELEVATE EVERY EXPERIENCE' },
-  { id: 7, imageUrl: "/images/7.gif", title: 'RELENTLESS OPTIMIZATION' },
+  { id: 1, imageUrl: vision, title: 'CRAFTING YOUR VISION' },
+  { id: 2, imageUrl: shape, title: 'SHAPE YOUR IDEAS' },
+  { id: 3, imageUrl: dynamic, title: 'CRAFTING DYNAMIC DESIGNS' },
+  { id: 4, imageUrl: canvas, title: 'CANVAS OF CREATION' },
+  { id: 5, imageUrl: path, title: `SHAPING TOMORROWS'S PATH` },
+  { id: 6, imageUrl: harmonizing, title: 'HARMONIZING DESIGNS' },
+  { id: 7, imageUrl: empowering, title: 'EMPOWERING CREATIVITY' },
 ];
 
 const Essence = () => {
   return (
     <>
-      <div className="container">
-        <div className="capabilities pt-3 pb-5">
-          <h2>WHY SEMANTIC TRIBE</h2>
-        </div>
-
+      <Container >
+        <Heading heading={"THE ESSENCE OF OUR PURPOSE"} />
         <div className="outercomb pt-3 pb-5">
           <ul className="honeycomb">
             {honeycombData.map(item => (
               <li key={item.id} className="honeycomb-cell">
-                <img
-                  className="honeycomb-cell__image"
-                  src={item.imageUrl}
-                  alt={item.title}
-                  width={500}
-                  height={500}
-                />
+                <Image className="honeycomb-cell__image" src={item.imageUrl} sizes="80vw" width={0}
+                  height={0} alt={item.title} />
+
                 <div className="honeycomb-cell__title px-2">{item.title}</div>
               </li>
             ))}
             <li className="honeycomb-cell honeycomb__placeholder"></li>
           </ul>
         </div>
-      </div>
+      </Container>
     </>
   );
 }

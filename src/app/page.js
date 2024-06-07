@@ -5,7 +5,7 @@ import Hero from '@/landingpagesections/Hero'
 import Offer from '@/landingpagesections/Offer'
 import Vision from '@/landingpagesections/Vision'
 import FeaturedDesigns from '@/landingpagesections/FeaturedDesigns'
-import Essence from '@/landingpagesections/ESSENCE'
+import Essence from '@/landingpagesections/Essence'
 
 const page = () => {
   return (

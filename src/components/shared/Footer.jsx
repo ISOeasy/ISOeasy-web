@@ -4,7 +4,7 @@ import React from 'react';
 import moment from 'moment';
 import Image from 'next/image';
 import { Container, Row, Col } from 'react-bootstrap';
-
+import logo from "../../assets/logo.png"
 const Footer = () => {
     const currentYear = moment().format('YYYY');
 
@@ -68,7 +68,7 @@ const Footer = () => {
                 <Container className="py-4">
                     <Row>
                         <Col lg={4} className="text-start">
-                            {/* <Image src="footerlogo.png" width={0} height={0} style={{ width: "100%", height: "100%" }} alt='footerlogo' /> */}
+                            <Image src={logo} width={0} height={0} style={{ width: "100%", height: "100%" }} alt='footerlogo' />
                         </Col>
                         <Col lg={3}>
                             <h5 style={headings}>WE OFFER</h5>

@@ -5,33 +5,33 @@ import Heading from '../components/shared/Heading';
 const capabilitiesData = [
   {
     title: 'Graphics',
-    description: 'Craft visually stunning and interactive websites that leave a lasting impression. ',
+    description: `Enhance pipeline design with visually striking graphics tailored to your project's needs.`,
     image: "/web.gif"
   },
   {
     title: 'Custom Shapes',
     image: "/mobile.gif",
-    description: 'Transform your unique app ideas into user-friendly and engaging mobile applications. ',
+    description: 'Craft unique pipeline layouts using our diverse range of customizable shapes. ',
   },
   {
-    title: 'Upload',
+    title: 'Self Upload',
     image: "/ui.gif",
-    description: 'Blend aesthetics with user-friendly functionality for designs that stand out. ',
+    description: 'Empower users to seamlessly incorporate their own data and assets into the pipeline design process. ',
   },
   {
     title: 'Add Tables',
     image: "/cloud.gif",
-    description: 'Use the strength of the cloud for smart solutions, making sure everything runs smoothly. ',
+    description: '"Effortlessly integrate tables to organize and present key information within your pipeline design." ',
   },
   {
     title: 'Export Options',
     image: "/game.gif",
-    description: 'Dive your audience into exciting gaming adventures with our skilled game development services. ',
+    description: 'Flexible export options ensure easy preview of the design',
   },
   {
-    title: 'Blockchain Development',
+    title: 'Action Controls',
     image: "/blockchain.gif",
-    description: 'Explore innovative decentralized solutions that bring a fresh perspective to your business. ',
+    description: 'Effortlessly navigate and refine your pipeline designs with zoom, undo, and other intuitive actions for enhanced productivity. ',
   },
 
 

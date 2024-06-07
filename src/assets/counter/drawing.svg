@@ -1,0 +1,24 @@
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="100" height="100" fill="#f0f0f0"/>
+
+  <!-- Vertical pipeline -->
+  <rect x="45" y="10" width="10" height="80" fill="#d3d3d3" stroke="#888" stroke-width="2"/>
+
+  <!-- Horizontal pipeline at the top -->
+  <rect x="20" y="10" width="60" height="10" fill="#d3d3d3" stroke="#888" stroke-width="2"/>
+
+  <!-- Horizontal pipeline in the middle -->
+  <rect x="20" y="45" width="60" height="10" fill="#d3d3d3" stroke="#888" stroke-width="2"/>
+
+  <!-- Horizontal pipeline at the bottom -->
+  <rect x="20" y="80" width="60" height="10" fill="#d3d3d3" stroke="#888" stroke-width="2"/>
+
+  <!-- Vertical pipe connectors -->
+  <circle cx="25" cy="15" r="5" fill="#888"/>
+  <circle cx="75" cy="15" r="5" fill="#888"/>
+  <circle cx="25" cy="50" r="5" fill="#888"/>
+  <circle cx="75" cy="50" r="5" fill="#888"/>
+  <circle cx="25" cy="85" r="5" fill="#888"/>
+  <circle cx="75" cy="85" r="5" fill="#888"/>
+</svg>

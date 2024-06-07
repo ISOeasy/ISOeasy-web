@@ -2,12 +2,16 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import CounterCards from "../components/landingpagecomponents/CounterCards"
+import projects from "../assets/counter/projects.svg"
+import drawing from "../assets/counter/drawing.svg"
+import client from "../assets/counter/clients.svg"
+import reviews from "../assets/counter/reviews.svg"
 const Counter = () => {
     const counters = [
-        { image: '/completed.gif', end: 100, suffix: '+', label: 'PROJECT' },
-        { image: '/happy.gif', end: 100, suffix: '%', label: 'DRAWINGS' },
-        { image: '/commits.gif', end: 1000, suffix: '+', label: 'CLIENTS' },
-        { image: '/reviews.gif', end: 500, suffix: '+', label: 'REVIEWS' }
+        { image: projects, end: 100, suffix: '+', label: 'PROJECT' },
+        { image: drawing, end: 100, suffix: '%', label: 'DRAWINGS' },
+        { image: client, end: 1000, suffix: '+', label: 'CLIENTS' },
+        { image: reviews, end: 500, suffix: '+', label: 'REVIEWS' }
     ];
     return (
 
@@ -16,6 +20,9 @@ const Counter = () => {
                 <Row>
                     {counters.map((counter, index) => (
                         <Col key={index} xs={12} md={6} lg={3}>
+                            
+
+
 
                             <CounterCards
                                 image={counter.image}
