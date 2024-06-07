@@ -5,10 +5,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import logo from "../../assets/logo.png";
 import { navItems } from './NavItems';
+import Sidebar from './Sidebar';
 
 const Header = () => {
     const [scrolling, setScrolling] = useState(false);
     const [activeButton, setActiveButton] = useState();
+    const [showOffcanvas, setShowOffcanvas] = useState(false); // State for Offcanvas visibility
+
+    const handleOffcanvasClose = () => setShowOffcanvas(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -63,7 +67,7 @@ const Header = () => {
                             <Image src={logo} width={160} height={60} alt='logo' />
                         </div>
                     </Link>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setShowOffcanvas(!showOffcanvas)} /> 
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="m-auto">
                             {navItems.map((item, index) => (
@@ -83,6 +87,13 @@ const Header = () => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+            <Sidebar 
+                navItems={navItems}
+                showOffcanvas={showOffcanvas}
+                handleOffcanvasClose={handleOffcanvasClose}
+                activeButton={activeButton}
+                handleClick={(index) => setActiveButton(index)}
+            />
         </>
     );
 };

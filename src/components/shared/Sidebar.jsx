@@ -1,7 +1,7 @@
 import React from 'react';
 import { Offcanvas, Nav } from 'react-bootstrap';
 
-const SidebarNavlinks = ({ navItems, showOffcanvas, handleOffcanvasClose, activeButton, handleClick }) => {
+const Sidebar = ({ navItems, showOffcanvas, handleOffcanvasClose, activeButton, handleClick }) => {
     return (
         <Offcanvas show={showOffcanvas} onHide={handleOffcanvasClose} placement="end" className={"Sidebar"}>
             <Offcanvas.Header closeButton>
@@ -30,4 +30,4 @@ const SidebarNavlinks = ({ navItems, showOffcanvas, handleOffcanvasClose, active
     );
 };
 
-export default SidebarNavlinks;
+export default Sidebar;
