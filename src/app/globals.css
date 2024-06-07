@@ -521,3 +521,9 @@ html {
   color: var(--secondary-color) !important;
   font-weight: 700;
 }
+.footer-logo{
+  font-size:40px;
+  color: var(--secondary-color);
+  font-weight: 800;
+  letter-spacing:2px;
+}
