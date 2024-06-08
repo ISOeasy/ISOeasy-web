@@ -16,10 +16,12 @@ const Vision = () => {
                                 <p className='text-justify'>
                                     An Innovative new product, ISO easy! This cutting-edge platform is designed to revolutionize the way you create and design your pipelines. With ISOeasy, you will have access to an intuitive interface featuring dynamic shapes and graphics that allow for seamless, creative pipeline design. Whether you are a seasoned engineer or new to the field, ISOeasy offers powerful tools to help you visualize and implement your ideas effortlessly. Stay tuned for more updates as we prepare to unveil a new era in pipeline design, tailored to meet all your needs with precision and creativity.<i><b>Join our Mailing List to get to know when we launch!</b> </i>
                                 </p>
-
-                                <Link href='#contact' passHref>
+            <div className='text-center text-lg-start'>
+            <Link href='#contact' passHref>
                                     <Button variant="vision">Join Mailing List</Button>
                                 </Link>
+            </div>
+                                
 
                             </div>
                         </Col>

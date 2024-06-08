@@ -57,7 +57,7 @@ const ContactForm = () => {
             <Container className="pt-2 pb-4">
                 <Heading heading={"JOIN OUR MAILING LIST"} />
                 <Col xs={12} lg={9} className="mx-auto">
-                    <Card className="px-5 py-4 border-0 contact-card">
+                    <Card className="px-lg-5 px-3 py-4 border-0 contact-card">
                         <Form className="py-4 text-center" onSubmit={handleSubmit}>
                             <Row>
                                 <Col lg={6}>
