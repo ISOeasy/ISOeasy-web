@@ -23,7 +23,7 @@ const honeycombData = [
 const Essence = () => {
   return (
     <>
-    <section id='essence'>
+    <section id='essence' className='pt-3'>
     <Container >
         <Heading heading={"THE ESSENCE OF OUR PURPOSE"} />
         <div className="outercomb pt-3 pb-5">
