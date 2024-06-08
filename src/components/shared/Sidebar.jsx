@@ -1,5 +1,6 @@
+import Link from 'next/link';
 import React from 'react';
-import { Offcanvas, Nav } from 'react-bootstrap';
+import { Offcanvas, Nav, NavLink } from 'react-bootstrap';
 
 const Sidebar = ({ navItems, showOffcanvas, handleOffcanvasClose, activeButton, handleClick }) => {
     return (
@@ -8,10 +9,10 @@ const Sidebar = ({ navItems, showOffcanvas, handleOffcanvasClose, activeButton, 
                 <Offcanvas.Title>Navigation</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body className='p-0'>
-                <Nav>
+          
                     <div>
                         {navItems.map((item, index) => (
-                            <Nav.Link
+                            <NavLink
                                 key={index}
                                 href={item.href}
                                 className={`nav-link-wrapper py-3 ${activeButton === index ? 'activenav' : ''}`}
@@ -20,11 +21,17 @@ const Sidebar = ({ navItems, showOffcanvas, handleOffcanvasClose, activeButton, 
                                     handleOffcanvasClose();
                                 }}
                             >
-                                {item.label}
-                            </Nav.Link>
+                                
+                              <span className='px-3'>
+                              {item.label}
+                              </span>
+                            
+                              
+                               
+                            </NavLink>
                         ))}
                     </div>
-                </Nav>
+      
             </Offcanvas.Body>
         </Offcanvas>
     );
