@@ -73,27 +73,31 @@ html {
   transform-origin: bottom left;
 }
 
-.Sidebar {
+.offcanvas {
   background-color: var(--primary-color) !important;
   width: 300px !important;
 }
-.Sidebar .nav-link {
+.offcanvas .nav-link {
   color: white !important;
   border-bottom: 2px solid var(--secondary-color);
 }
-.Sidebar .nav {
+.offcanvas .nav {
   width: 100%;
   display: block !important;
 }
-.Sidebar .activenav {
+.offcanvas .activenav {
   color: var(--secondary-color) !important;
 }
-.Sidebar .offcanvas-title {
+.offcanvas .offcanvas-title {
   color: var(--secondary-color) !important;
 }
 .offcanvas-header .btn-close {
   background-color: var(--secondary-color) !important;
   opacity: 1 !important;
+}
+.activesidebar{
+  background-color: var(--secondary-color) !important;
+  color: var(--primary-color) !important;
 }
 
 .counterbg {
