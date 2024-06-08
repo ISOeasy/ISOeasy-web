@@ -90,7 +90,7 @@ const Footer = () => {
                         </Col>
 
                         <Col xs={12} lg={6} className='d-lg-none d-block'>
-                        <h5 className='footerheading'>Reach Us Out</h5>
+                            <h5 className='footerheading'>Reach Us Out</h5>
                             <div className="justify-content-lg-end justify-content-center d-block d-lg-flex">
                                 <div className="d-flex justify-content-start  me-4 py-2 py-lg-0">
                                     <div>
