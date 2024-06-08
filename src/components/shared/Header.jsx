@@ -10,48 +10,29 @@ const Header = () => {
     const [scrolling, setScrolling] = useState(false);
     const [activeButton, setActiveButton] = useState(null);
     const [showOffcanvas, setShowOffcanvas] = useState(false);
-    const [mounted, setMounted] = useState(false);
 
     const handleOffcanvasClose = () => setShowOffcanvas(false);
 
-    useLayoutEffect(() => {
-        setMounted(true);
-    }, []);
 
     useEffect(() => {
-        if (mounted) {
-            const scroll = new SmoothScroll('a[href*="#"]', {
-                speed: 800,
-                speedAsDuration: true,
-            });
 
-            const handleScroll = () => {
-                setScrolling(window.scrollY > 60);
 
-                navItems.forEach((item, index) => {
-                    const element = document.getElementById(item.href.slice(1));
-                    if (element) {
-                        const rect = element.getBoundingClientRect();
-                        if (rect.top <= 60 && rect.bottom >= 60) {
-                            setActiveButton(index);
-                        }
-                    }
-                });
-            };
 
-            window.addEventListener('scroll', handleScroll);
-            handleScroll();
+        const handleScroll = () => {
+            setScrolling(window.scrollY > 60);
 
-            return () => {
-                window.removeEventListener('scroll', handleScroll);
-            };
-        }
-    }, [mounted]);
 
-    const handleSetActive = (index) => {
-        setActiveButton(index);
-        setShowOffcanvas(false);
-    };
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+
+    }, []);
+
 
     const navbarStyle = {
         backgroundColor: scrolling ? '#002338' : 'rgba(0, 0, 0, 0.4)',
