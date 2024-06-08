@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import Link from 'next/link';
 import { navItems } from './NavItems';
@@ -10,11 +10,16 @@ const Header = () => {
     const [scrolling, setScrolling] = useState(false);
     const [activeButton, setActiveButton] = useState(null);
     const [showOffcanvas, setShowOffcanvas] = useState(false);
+    const [mounted, setMounted] = useState(false);
 
     const handleOffcanvasClose = () => setShowOffcanvas(false);
 
+    useLayoutEffect(() => {
+        setMounted(true);
+    }, []);
+
     useEffect(() => {
-        if (typeof window !== 'undefined') {
+        if (mounted) {
             const scroll = new SmoothScroll('a[href*="#"]', {
                 speed: 800,
                 speedAsDuration: true,
@@ -41,7 +46,7 @@ const Header = () => {
                 window.removeEventListener('scroll', handleScroll);
             };
         }
-    }, []);
+    }, [mounted]);
 
     const handleSetActive = (index) => {
         setActiveButton(index);
