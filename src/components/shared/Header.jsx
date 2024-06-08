@@ -1,10 +1,9 @@
 "use client";
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import Link from 'next/link';
 import { navItems } from './NavItems';
 import Sidebar from './Sidebar';
-import SmoothScroll from 'smooth-scroll';
 
 const Header = () => {
     const [scrolling, setScrolling] = useState(false);
@@ -13,15 +12,19 @@ const Header = () => {
 
     const handleOffcanvasClose = () => setShowOffcanvas(false);
 
-
     useEffect(() => {
-
-
-
         const handleScroll = () => {
             setScrolling(window.scrollY > 60);
 
-
+            navItems.forEach((item, index) => {
+                const element = document.getElementById(item.href.slice(1));
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    if (rect.top <= 60 && rect.bottom >= 60) {
+                        setActiveButton(index);
+                    }
+                }
+            });
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -33,6 +36,10 @@ const Header = () => {
 
     }, []);
 
+    const handleSetActive = (index) => {
+        setActiveButton(index);
+        setShowOffcanvas(false);
+    };
 
     const navbarStyle = {
         backgroundColor: scrolling ? '#002338' : 'rgba(0, 0, 0, 0.4)',
