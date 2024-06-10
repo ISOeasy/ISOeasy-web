@@ -136,7 +136,7 @@ const Footer = () => {
                         <Row>
                             <Col xs={12} lg={6} className='order-1 order-lg-0'>
                                 <div className='text-center text-lg-start'>
-                                    &copy; {currentYear} Iso Easy. All rights reserved.
+                                    &copy; {currentYear} ISOeasy. All rights reserved.
                                 </div>
 
                             </Col>

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Container, Card, Form, Row, Col, Button, Spinner } from "react-bootstrap";
 import Heading from "../components/shared/Heading";
 import ComingSoon from "@/components/landingpagecomponents/ComingSoonModal";
+import { toast } from "react-toastify";
 
 const ContactForm = () => {
     const [name, setName] = useState("");
@@ -35,7 +36,6 @@ const ContactForm = () => {
             setSubmitted(true);
             setModalShow(true);
 
-            // Clear the form fields
             setName("");
             setEmail("");
             setSubject("");
@@ -47,6 +47,7 @@ const ContactForm = () => {
 
         } catch (error) {
             console.error("Error submitting form:", error);
+            toast.error("Error submitting form")
         } finally {
             setLoading(false);
         }

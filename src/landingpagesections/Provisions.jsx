@@ -46,7 +46,7 @@ const Provisions = () => {
   return (
     <section id='assistance'>
       <Container className="container py-5">
-        <Heading heading={"OUR ASSISTANCE"} />
+        <Heading heading={"SPOTLIGHT ON OUR KEY FEATURES"} />
         <Row className="justify-content-around">
           {capabilitiesData.map((capability, index) => (
             <Col xs={12} md={6} lg={4} className='py-3' key={index}>

@@ -107,7 +107,7 @@ export default function Hero() {
 
                                     'Create stunning graphics with ease and precision.',
                                     1000,
-                                    'Transform your ideas into reality with ISO Easy. ',
+                                    'Transform your ideas into reality easily with ISO Easy.',
                                     1000,
                                     'Customize every detail to fit your unique needs.',
                                     1000,
