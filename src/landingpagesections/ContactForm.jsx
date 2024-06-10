@@ -1,18 +1,34 @@
-"use client";
+"use client"
 import React, { useState } from "react";
 import { Container, Card, Form, Row, Col, Button, Spinner } from "react-bootstrap";
 import Heading from "../components/shared/Heading";
 import ComingSoon from "@/components/landingpagecomponents/ComingSoonModal";
 import { toast } from "react-toastify";
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 const ContactForm = () => {
+    const firebaseConfig = {
+        apiKey: "AIzaSyAu_EAkDFUu7YlP7x5O6zEMUSwDWtqw590",
+        authDomain: "isopipeline.firebaseapp.com",
+        databaseURL: "https://isopipeline-default-rtdb.firebaseio.com",
+        projectId: "isopipeline",
+        storageBucket: "isopipeline.appspot.com",
+        messagingSenderId: "912121584717",
+        appId: "1:912121584717:web:bf9ca75d5502e758f6d004",
+        measurementId: "G-C2PLK4TE92"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [subject, setSubject] = useState("");
     const [phone, setPhone] = useState("");
-    const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const [submitted, setSubmitted] = useState(false);
     const [modalShow, setModalShow] = useState(false);
 
     const handleSubmit = async (e) => {
@@ -20,29 +36,24 @@ const ContactForm = () => {
         setLoading(true);
 
         try {
-            await fetch("https://isopipeline-default-rtdb.firebaseio.com/form.json", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    subject,
-                    phone,
-                    message,
-                })
+        
+            await addDoc(collection(db, "webQueries"), {
+                name,
+                email,
+                subject,
+                phone,
+                message,
             });
+            
             setSubmitted(true);
             setModalShow(true);
 
+        
             setName("");
             setEmail("");
             setSubject("");
             setPhone("");
             setMessage("");
-
-
             setSubmitted(false);
 
         } catch (error) {

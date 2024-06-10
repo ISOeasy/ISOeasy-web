@@ -556,7 +556,7 @@ html {
 .image-enlarge .modal-header {
   border: none;
 }
-.modal-header .btn-close {
+.image-enlarge .modal-header .btn-close {
   /* background-image: url(../assets/close.svg)!important; */
   background-color: var(--secondary-color) !important;
   fill: var(--secondary-color) !important;
