@@ -23,23 +23,8 @@ const honeycombData = [
 ];
 
 const Essence = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedTitle, setSelectedTitle] = useState('');
-  const [loading, setLoading] = useState(true);
 
-  const handleShowModal = (image, title) => {
-    setSelectedImage(image);
-    setSelectedTitle(title);
-    setShowModal(true);
-    setLoading(true);
-  };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setSelectedImage(null);
-    setSelectedTitle('');
-  };
 
   return (
     <>
@@ -52,7 +37,6 @@ const Essence = () => {
                 <li
                   key={item.id}
                   className="honeycomb-cell"
-                  onClick={() => handleShowModal(item.imageUrl, item.title)}
                 >
                   <Image
                     className="honeycomb-cell__image"
@@ -71,27 +55,7 @@ const Essence = () => {
         </Container>
       </section>
 
-      <Modal show={showModal} onHide={handleCloseModal} className='image-enlarge' centered >
-        <Modal.Header closeButton className='bg-transparent'>
-        </Modal.Header>
-        <Modal.Body className='bg-transparent'>
-          {loading && (
-            <div className="loader-container">
-              <ClipLoader color="#d7ba89" />
-            </div>
-          )}
-          {selectedImage && (
-            <Image
-              src={selectedImage}
-              alt={selectedTitle}
-              layout="responsive"
-              width={700}
-              height={475}
-              onLoadingComplete={() => setLoading(false)}
-            />
-          )}
-        </Modal.Body>
-      </Modal>
+  
 
     </>
   );
