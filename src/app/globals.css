@@ -325,6 +325,7 @@ html {
   padding: 0.5em;
   text-align: center;
   z-index: 1;
+  cursor: pointer;
 }
 
 .honeycomb-cell__title {
@@ -546,3 +547,27 @@ html {
   font-weight: 700;
   
 }
+.image-enlarge{
+  background-color: rgba(0,0,0,0.7);
+}
+
+.image-enlarge .modal-content{
+background-color: transparent!important;
+border:none;
+}
+.image-enlarge .modal-header{
+  
+  border: none;
+  }
+  .modal-header .btn-close{
+    /* background-image: url(../assets/close.svg)!important; */
+background-color: var(--secondary-color) !important;
+fill: var(--secondary-color) !important;
+  }
+
+  .loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
