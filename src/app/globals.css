@@ -95,7 +95,7 @@ html {
   background-color: var(--secondary-color) !important;
   opacity: 1 !important;
 }
-.activesidebar{
+.activesidebar {
   background-color: var(--secondary-color) !important;
   color: var(--primary-color) !important;
 }
@@ -526,48 +526,53 @@ html {
   letter-spacing: 1.2;
 }
 
-
-.logotext{
+.logotext {
   color: var(--secondary-color) !important;
   font-weight: 700;
 }
-.footer-logo{
-  font-size:40px;
+.footer-logo {
+  font-size: 40px;
   color: var(--secondary-color);
   font-weight: 800;
-  letter-spacing:2px;
+  letter-spacing: 2px;
 }
 
-.footerheading{
+.footerheading {
   letter-spacing: "1.2px";
   line-height: "1.2";
   padding: "20px 0";
   font-size: 26px;
   color: var(--secondary-color);
   font-weight: 700;
-  
 }
-.image-enlarge{
-  background-color: rgba(0,0,0,0.7);
+.image-enlarge {
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
-.image-enlarge .modal-content{
-background-color: transparent!important;
-border:none;
-}
-.image-enlarge .modal-header{
-  
+.image-enlarge .modal-content {
+  background-color: transparent !important;
   border: none;
-  }
-  .modal-header .btn-close{
-    /* background-image: url(../assets/close.svg)!important; */
-background-color: var(--secondary-color) !important;
-fill: var(--secondary-color) !important;
-  }
+}
+.image-enlarge .modal-header {
+  border: none;
+}
+.modal-header .btn-close {
+  /* background-image: url(../assets/close.svg)!important; */
+  background-color: var(--secondary-color) !important;
+  fill: var(--secondary-color) !important;
+}
 
-  .loader-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.view{
+  background-color: var(--primary-color) !important;
+  border: none !important;
+  font-size: 12px !important;
+  color: var(--secondary-color) !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.2px;
+}
