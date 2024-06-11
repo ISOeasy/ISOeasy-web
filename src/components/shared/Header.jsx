@@ -33,7 +33,6 @@ const Header = () => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-
     }, []);
 
     const handleSetActive = (index) => {
@@ -50,28 +49,34 @@ const Header = () => {
         <>
             <Navbar expanded={false} expand="lg" fixed="top" variant="dark" style={navbarStyle} className={scrolling ? 'scrolled py-2' : 'py-2'}>
                 <Container>
-                    <Link href="#home" passHref className="text-decoration-none">
-                        <div>
+                    <Link href="#home" passHref legacyBehavior>
+                        <a className="text-decoration-none">
                             <div>
-                                {/* <Image src={logo} width={160} height={60} alt='logo' /> */}
+                                <div>
+                                    {/* <Image src={logo} width={160} height={60} alt='logo' /> */}
+                                </div>
+                                <div>
+                                    <h3 className='logotext mt-2'>ISO EASY</h3>
+                                </div>
                             </div>
-                            <div>
-                                <h3 className='logotext mt-2'>ISO EASY</h3>
-                            </div>
-                        </div>
+                        </a>
                     </Link>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setShowOffcanvas(!showOffcanvas)} />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="m-auto">
                             {navItems.map((item, index) => (
-                                <Link key={index} href={item.href} passHref className={`nav-link-wrapper text-decoration-none mx-3 ${activeButton === index ? 'active' : 'nonactive'}`}>
-                                    {item.label}
-                                    <div className="underline mt-1"></div>
+                                <Link key={index} href={item.href} passHref legacyBehavior>
+                                    <a className={`nav-link-wrapper text-decoration-none mx-3 ${activeButton === index ? 'active' : 'nonactive'}`}>
+                                        {item.label}
+                                        <div className="underline mt-1"></div>
+                                    </a>
                                 </Link>
                             ))}
                         </Nav>
-                        <Link href='#contact' passHref>
-                            <Button variant="mailing">Join Mailing List</Button>
+                        <Link href="#contact" passHref legacyBehavior>
+                            <a>
+                                <Button variant="mailing">Join Mailing List</Button>
+                            </a>
                         </Link>
                     </Navbar.Collapse>
                 </Container>
