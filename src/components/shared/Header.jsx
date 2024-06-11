@@ -52,12 +52,7 @@ const Header = () => {
                     <Link href="#home" passHref legacyBehavior>
                         <a className="text-decoration-none">
                             <div>
-                                <div>
-                                    {/* <Image src={logo} width={160} height={60} alt='logo' /> */}
-                                </div>
-                                <div>
-                                    <h3 className='logotext mt-2'>ISO EASY</h3>
-                                </div>
+                                <h3 className='logotext mt-2'>ISO EASY</h3>
                             </div>
                         </a>
                     </Link>
@@ -65,18 +60,16 @@ const Header = () => {
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="m-auto">
                             {navItems.map((item, index) => (
-                                <Link key={index} href={item.href} passHref legacyBehavior className={`nav-link-wrapper text-decoration-none mx-3 ${activeButton === index ? 'active' : 'nonactive'}`}>
-                                   
+                                <Link key={index} href={item.href} passHref legacyBehavior>
+                                    <a className={`nav-link-wrapper text-decoration-none mx-3 ${activeButton === index ? 'active' : 'nonactive'}`}>
                                         {item.label}
                                         <div className="underline mt-1"></div>
-                                 
+                                    </a>
                                 </Link>
                             ))}
                         </Nav>
                         <Link href="#contact" passHref legacyBehavior>
-                         
-                                <Button variant="mailing">Join Mailing List</Button>
-                          
+                            <Button variant="mailing">Join Mailing List</Button>
                         </Link>
                     </Navbar.Collapse>
                 </Container>
