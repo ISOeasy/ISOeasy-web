@@ -4,23 +4,10 @@ import { Container, Card, Form, Row, Col, Button, Spinner } from "react-bootstra
 import Heading from "../components/shared/Heading";
 import ComingSoon from "@/components/landingpagecomponents/ComingSoonModal";
 import { toast } from "react-toastify";
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { db } from "../database/firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 const ContactForm = () => {
-    const firebaseConfig = {
-        apiKey: "AIzaSyAu_EAkDFUu7YlP7x5O6zEMUSwDWtqw590",
-        authDomain: "isopipeline.firebaseapp.com",
-        databaseURL: "https://isopipeline-default-rtdb.firebaseio.com",
-        projectId: "isopipeline",
-        storageBucket: "isopipeline.appspot.com",
-        messagingSenderId: "912121584717",
-        appId: "1:912121584717:web:bf9ca75d5502e758f6d004",
-        measurementId: "G-C2PLK4TE92"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
     
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
