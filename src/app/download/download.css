@@ -1,0 +1,67 @@
+.download-page {
+  min-height: 80vh;
+}
+
+.platform-selector:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 35, 56, 0.15);
+}
+
+.download-details {
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.version-item:hover {
+  background-color: rgba(215, 186, 137, 0.1);
+}
+
+/* Custom button styles for the download page */
+.btn-outline-vision {
+  background-color: transparent;
+  border: 1px solid var(--primary-color) !important;
+  padding: 10px 20px !important;
+  color: var(--primary-color) !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.2;
+}
+
+.btn-outline-vision:hover {
+  background-color: var(--primary-color) !important;
+  color: var(--secondary-color) !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .download-page {
+    padding-top: 80px;
+  }
+}
+
+/* Animation for platform selection */
+.platform-selector {
+  transition: all 0.3s ease;
+}
+
+/* System requirements section styling */
+.system-requirements {
+  background-color: rgba(215, 186, 137, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid var(--secondary-color);
+}
+
+/* Feature card styling */
+.feature {
+  padding: 20px;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+}
+
+.feature-icon {
+  color: var(--primary-color);
+}

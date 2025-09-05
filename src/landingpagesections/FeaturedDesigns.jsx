@@ -8,7 +8,7 @@ import ImageEnlargeModal from '@/components/landingpagecomponents/ImageEnlargeMo
 
 const projects = [
   {
-    title: 'AAAA Scott Phelps Files',
+    title: 'P&ID Development',
     description: 'A Small Description',
     image: cardimg
   },
