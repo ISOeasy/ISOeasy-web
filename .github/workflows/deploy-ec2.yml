@@ -1,0 +1,65 @@
+name: Deploy to Amazon EC2
+
+env:
+  EC2_HOST: 3.93.65.207
+  EC2_USERNAME: ec2-user
+  EC2_SSH_KEY_PATH: ./shridhar_iso.pem
+  AWS_ACCESS_KEY_ID: AKIATXZTYS5MUM27AHT7
+  AWS_SECRET_ACCESS_KEY: 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
+  AWS_REGION: us-east-1
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Transfer project files to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ env.EC2_HOST }}
+          username: ${{ env.EC2_USERNAME }}
+          key_path: ${{ env.EC2_SSH_KEY_PATH }}
+          source: "."
+          target: "/var/www/iso-easy-web"
+          strip_components: 0
+
+      - name: Setup and start services
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.EC2_HOST }}
+          username: ${{ env.EC2_USERNAME }}
+          key_path: ${{ env.EC2_SSH_KEY_PATH }}
+          script: |            
+            # Restart nginx
+            sudo systemctl restart nginx
+            echo "Deployment completed successfully!"
