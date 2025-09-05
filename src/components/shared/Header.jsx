@@ -4,11 +4,27 @@ import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import Link from 'next/link';
 import { navItems } from './NavItems';
 import Sidebar from './Sidebar';
+import { usePathname } from 'next/navigation';
 
 const Header = () => {
     const [scrolling, setScrolling] = useState(false);
     const [activeButton, setActiveButton] = useState(null);
     const [showOffcanvas, setShowOffcanvas] = useState(false);
+    const pathname = usePathname();
+    const isHomePage = pathname === '/' || pathname === '';
+    
+    // Set active button based on current path
+    useEffect(() => {
+        if (!isHomePage) {
+            const currentPageIndex = navItems.findIndex(item => 
+                item.href === pathname || 
+                (pathname.startsWith(item.href) && item.href !== '/#home')
+            );
+            if (currentPageIndex !== -1) {
+                setActiveButton(currentPageIndex);
+            }
+        }
+    }, [pathname, isHomePage]);
 
     const handleOffcanvasClose = () => setShowOffcanvas(false);
 
@@ -16,15 +32,21 @@ const Header = () => {
         const handleScroll = () => {
             setScrolling(window.scrollY > 60);
 
-            navItems.forEach((item, index) => {
-                const element = document.getElementById(item.href.slice(1));
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    if (rect.top <= 60 && rect.bottom >= 60) {
-                        setActiveButton(index);
+            if (isHomePage) {
+                navItems.forEach((item, index) => {
+                    const itemHref = item.href.startsWith('/#') ? item.href.substring(1) : item.href;
+                    const elementId = itemHref.startsWith('#') ? itemHref.slice(1) : null;
+                    if (elementId) {
+                        const element = document.getElementById(elementId);
+                        if (element) {
+                            const rect = element.getBoundingClientRect();
+                            if (rect.top <= 60 && rect.bottom >= 60) {
+                                setActiveButton(index);
+                            }
+                        }
                     }
-                }
-            });
+                });
+            }
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -33,7 +55,7 @@ const Header = () => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [isHomePage]);
 
     const handleSetActive = (index) => {
         setActiveButton(index);
@@ -41,8 +63,8 @@ const Header = () => {
     };
 
     const navbarStyle = {
-        backgroundColor: scrolling ? '#002338' : 'rgba(0, 0, 0, 0.4)',
-        borderBottom: scrolling ? '3px solid #D7BA89' : 'none',
+        backgroundColor: isHomePage ? (scrolling ? '#002338' : 'rgba(0, 0, 0, 0.4)') : '#002338',
+        borderBottom: scrolling || !isHomePage ? '3px solid #D7BA89' : 'none',
     };
 
     return (
