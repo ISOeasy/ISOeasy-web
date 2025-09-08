@@ -42,6 +42,12 @@ jobs:
           aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+          
+      - name: Create SSH key file
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ${{ env.EC2_SSH_KEY_PATH }}
+          chmod 600 ${{ env.EC2_SSH_KEY_PATH }}
 
       - name: Transfer project files to EC2
         uses: appleboy/scp-action@master
@@ -66,10 +72,16 @@ jobs:
           username: ${{ env.EC2_USERNAME }}
           key_path: ${{ env.EC2_SSH_KEY_PATH }}
           script: |
+            # Create directory if it doesn't exist
+            sudo mkdir -p /var/www/iso-easy-web
+            
+            # Set proper permissions
+            sudo chown -R ${{ env.EC2_USERNAME }}:${{ env.EC2_USERNAME }} /var/www/iso-easy-web
+            
             # Make setup script executable
             chmod +x /var/www/iso-easy-web/ec2-setup.sh
             
-            # Execute the setup script (without SSL by default)
+            # Execute the setup script with SSL enabled
             cd /var/www/iso-easy-web
             sudo ./ec2-setup.sh isoeasy.app true
             
