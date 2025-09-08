@@ -65,7 +65,12 @@ jobs:
           host: ${{ env.EC2_HOST }}
           username: ${{ env.EC2_USERNAME }}
           key_path: ${{ env.EC2_SSH_KEY_PATH }}
-          script: |            
-            # Restart nginx
-            sudo systemctl restart nginx
+          script: |
+            # Make setup script executable
+            chmod +x /var/www/iso-easy-web/ec2-setup.sh
+            
+            # Execute the setup script (without SSL by default)
+            cd /var/www/iso-easy-web
+            sudo ./ec2-setup.sh isoeasy.app true
+            
             echo "Deployment completed successfully!"
