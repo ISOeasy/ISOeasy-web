@@ -83,7 +83,21 @@ server {
     # SSL certificates will be configured by Certbot
 
     location / {
-        try_files \$uri \$uri/ /index.html;
+        try_files \$uri \$uri.html \$uri/ /index.html;
+    }
+    
+    # Handle Next.js static files
+    location /_next/static/ {
+        alias $APP_DIR/_next/static/;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+    
+    # Handle other static assets
+    location /static/ {
+        alias $APP_DIR/static/;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
     }
 
     # Add caching for static assets
@@ -110,7 +124,21 @@ server {
     index index.html;
 
     location / {
-        try_files \$uri \$uri/ /index.html;
+        try_files \$uri \$uri.html \$uri/ /index.html;
+    }
+    
+    # Handle Next.js static files
+    location /_next/static/ {
+        alias $APP_DIR/_next/static/;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+    
+    # Handle other static assets
+    location /static/ {
+        alias $APP_DIR/static/;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
     }
 
     # Add caching for static assets
