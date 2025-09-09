@@ -1,5 +1,6 @@
 import React from 'react';
 import { Offcanvas, Nav } from 'react-bootstrap';
+import Link from 'next/link';
 
 const Sidebar = ({ navItems, showOffcanvas, handleOffcanvasClose, activeButton, handleClick }) => {
     return (
@@ -11,10 +12,23 @@ const Sidebar = ({ navItems, showOffcanvas, handleOffcanvasClose, activeButton, 
                 </Offcanvas.Header>
                 <Offcanvas.Body className="p-0">
                     {navItems.map((link, index) => (
-                        <Nav.Link className={`p-3 ${activeButton === index ? 'activesidebar' : ''}`} key={index} href={link.href} onClick={handleClick}>
-                            {link.label}
-                            <div className="underline"></div>
-                        </Nav.Link>
+                        <Link key={index} href={link.href} passHref legacyBehavior>
+                            <a 
+                                className={`nav-link p-3 d-block text-decoration-none ${activeButton === index ? 'activesidebar' : ''}`}
+                                onClick={() => handleClick(index)}
+                                style={{ 
+                                    color: 'inherit',
+                                    cursor: 'pointer',
+                                    WebkitTapHighlightColor: 'transparent',
+                                    WebkitTouchCallout: 'none',
+                                    WebkitUserSelect: 'none',
+                                    userSelect: 'none'
+                                }}
+                            >
+                                {link.label}
+                                <div className="underline"></div>
+                            </a>
+                        </Link>
                     ))}
                 </Offcanvas.Body>
             </Offcanvas>
