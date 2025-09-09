@@ -59,11 +59,6 @@ jobs:
           target: "/var/www/iso-easy-web"
           strip_components: 0
           rm: false
-          exclude: |
-            node_modules
-            .git
-            .github
-            .next/cache
 
       - name: Setup and start services
         uses: appleboy/ssh-action@master

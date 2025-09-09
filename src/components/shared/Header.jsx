@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import Link from 'next/link';
+import Image from 'next/image';
 import { navItems } from './NavItems';
 import Sidebar from './Sidebar';
 import { usePathname } from 'next/navigation';
@@ -72,8 +73,15 @@ const Header = () => {
             <Navbar expanded={false} expand="lg" fixed="top" variant="dark" style={navbarStyle} className={scrolling ? 'scrolled py-2' : 'py-2'}>
                 <Container>
                     <Link href="#home" passHref legacyBehavior>
-                        <a className="text-decoration-none">
-                            <div>
+                        <a className="text-decoration-none d-flex align-items-center">
+                            <div className="d-flex align-items-center">
+                                <Image 
+                                    src="/icon.png" 
+                                    alt="ISO Easy Logo" 
+                                    width={40} 
+                                    height={40} 
+                                    className="me-2" 
+                                />
                                 <h3 className='logotext mt-2'>ISO EASY</h3>
                             </div>
                         </a>

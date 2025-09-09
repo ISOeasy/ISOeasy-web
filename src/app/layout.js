@@ -6,9 +6,12 @@ import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
 
 const myFont = localFont({ src: '../../public/manrope.ttf' });
- const metadata = {
+const metadata = {
   title: 'ISO Easy',
-  description: 'A Pipeline Compant',
+  description: 'A Pipeline Company',
+  icons: {
+    icon: '/icon.png',
+  },
 };
 
 
@@ -18,7 +21,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={myFont.className}>
         <title>{metadata.title}</title>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
         <Header />
         {children}
         <Footer />
