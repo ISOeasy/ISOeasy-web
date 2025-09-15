@@ -1,0 +1,42 @@
+# Example queries - replace with your actual GraphQL queries
+
+query GetUsers {
+  users {
+    totalCount
+  }
+}
+
+query GetUserById($id: ID!) {
+  user(id: $id) {
+    id
+    name
+    email
+    role
+  }
+}
+
+# GetPosts query removed - posts field not available in current schema
+
+query GetBuilds {
+  builds {
+    totalCount
+  }
+}
+
+query GetBuildsByPlatform($platform: Platform!) {
+  buildsByPlatform(platform: $platform) {
+    builds {
+      id
+      appName
+      version
+      platform
+      downloadUrl
+      fileSize
+      checksum
+      changelog
+      createdAt
+      metadata
+    }
+    totalCount
+  }
+}

@@ -9,11 +9,13 @@ set -e
 # Default domain name (can be overridden with command line argument)
 DOMAIN_NAME=${1:-"isoeasy.app"}
 ENABLE_SSL=${2:-"false"}
+GRAPHQL_ENDPOINT=${3:-"http://localhost:4000/graphql"}
 
 echo "========================================"
 echo "Starting ISO Easy Web EC2 Setup"
 echo "Domain: $DOMAIN_NAME"
 echo "SSL Enabled: $ENABLE_SSL"
+echo "GraphQL Endpoint: $GRAPHQL_ENDPOINT"
 echo "========================================"
 
 # Update system packages
@@ -45,6 +47,24 @@ if ! command -v nginx &> /dev/null; then
     exit 1
 fi
 echo "Nginx successfully installed!"
+
+# Check for .env file to get GraphQL endpoint
+if [ -f ".env" ]; then
+    echo "Reading GraphQL endpoint from .env file..."
+    ENV_GRAPHQL_ENDPOINT=$(grep "^NEXT_PUBLIC_GRAPHQL_ENDPOINT=" .env | cut -d '=' -f2 | tr -d '"' | tr -d "'")
+    if [ ! -z "$ENV_GRAPHQL_ENDPOINT" ]; then
+        GRAPHQL_ENDPOINT="$ENV_GRAPHQL_ENDPOINT"
+        echo "Using GraphQL endpoint from .env: $GRAPHQL_ENDPOINT"
+    fi
+fi
+
+# Validate GraphQL endpoint
+if [ -z "$GRAPHQL_ENDPOINT" ]; then
+    echo "ERROR: GraphQL endpoint not specified. Please provide it as the third argument or set NEXT_PUBLIC_GRAPHQL_ENDPOINT in .env file."
+    exit 1
+fi
+
+echo "GraphQL endpoint configured: $GRAPHQL_ENDPOINT"
 
 # Create directory for the app if it doesn't exist
 echo "Setting up application directory..."
@@ -81,6 +101,21 @@ server {
     index index.html;
 
     # SSL certificates will be configured by Certbot
+
+    # GraphQL API proxy
+    location /api/graphql {
+        proxy_pass $GRAPHQL_ENDPOINT;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_cache_bypass \$http_upgrade;
+        proxy_read_timeout 300s;
+        proxy_connect_timeout 75s;
+    }
 
     location / {
         try_files \$uri \$uri.html \$uri/ /index.html;
@@ -122,6 +157,21 @@ server {
 
     root $APP_DIR;
     index index.html;
+
+    # GraphQL API proxy
+    location /api/graphql {
+        proxy_pass $GRAPHQL_ENDPOINT;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_cache_bypass \$http_upgrade;
+        proxy_read_timeout 300s;
+        proxy_connect_timeout 75s;
+    }
 
     location / {
         try_files \$uri \$uri.html \$uri/ /index.html;
@@ -251,5 +301,13 @@ echo "1. Build your Next.js app: npm run build"
 echo "2. Copy the 'out' directory to the server"
 echo "3. Run this script again to update the files"
 echo ""
-echo "To enable SSL, run: ./ec2-setup.sh yourdomain.com true"
+echo "Usage examples:"
+echo "  ./ec2-setup.sh yourdomain.com false http://localhost:4000/graphql"
+echo "  ./ec2-setup.sh yourdomain.com true https://api.yourdomain.com/graphql"
+echo "  ./ec2-setup.sh yourdomain.com true  # Will read from .env file"
+echo ""
+echo "GraphQL Proxy Configuration:"
+echo "  - Frontend requests: https://yourdomain.com/api/graphql"
+echo "  - Proxied to: $GRAPHQL_ENDPOINT"
+echo "  - No CORS issues: All requests appear from same origin"
 echo "========================================"

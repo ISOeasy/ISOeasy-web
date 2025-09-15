@@ -1,0 +1,40 @@
+# Example mutations - replace with your actual GraphQL mutations
+
+mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    id
+    name
+    email
+    createdAt
+  }
+}
+
+mutation UpdateUser($id: ID!, $input: UpdateUserInput!) {
+  updateUser(id: $id, input: $input) {
+    id
+    name
+    email
+    updatedAt
+  }
+}
+
+mutation DeleteUser($id: ID!) {
+  deleteUser(id: $id)
+}
+
+# CreatePost mutation removed - not available in current schema
+
+mutation CreateBuild($input: CreateBuildInput!) {
+  createBuild(input: $input) {
+    id
+    createdAt
+  }
+}
+
+mutation GenerateSignedUrl($input: GenerateSignedUrlInput!) {
+  generateSignedUrl(input: $input) {
+    signedUrl
+    expiresAt
+    buildId
+  }
+}

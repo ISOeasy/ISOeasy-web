@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import "../../node_modules/animate.css";
 import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
+import ApolloProvider from '@/components/ApolloProvider';
 
 const myFont = localFont({ src: '../../public/manrope.ttf' });
 
@@ -28,9 +29,11 @@ export default function RootLayout({ children }) {
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className={myFont.className}>
-        <Header />
-        {children}
-        <Footer />
+        <ApolloProvider>
+          <Header />
+          {children}
+          <Footer />
+        </ApolloProvider>
       </body>
     </html>
   );

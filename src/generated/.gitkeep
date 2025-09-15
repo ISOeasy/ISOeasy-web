@@ -1,0 +1,2 @@
+# This directory will contain generated GraphQL types and hooks
+# Run `npm run codegen` to generate the files
