@@ -187,7 +187,7 @@ server {
     index index.html;
 
     # API proxy
-    location /api/graphql {
+    location /api/graphql/ {
         rewrite ^/api/graphql(.*) /graphql\$1 break;
         proxy_pass $GRAPHQL_ENDPOINT;
         proxy_http_version 1.1;
