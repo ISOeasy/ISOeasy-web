@@ -10,10 +10,27 @@ set -e
 DOMAIN_NAME=${1:-"isoeasy.app"}
 ENABLE_SSL=${2:-"false"}
 
+# Load environment variables from .env file if it exists
+if [ -f ".env" ]; then
+    echo "Loading environment variables from .env file..."
+    export $(grep -v '^#' .env | xargs)
+elif [ -f ".env.local" ]; then
+    echo "Loading environment variables from .env.local file..."
+    export $(grep -v '^#' .env.local | xargs)
+fi
+
+# Get GraphQL endpoint from environment variable or use default
+GRAPHQL_ENDPOINT=${NEXT_PUBLIC_GRAPHQL_ENDPOINT:-"https://dashboard.isoeasy.app/api/graphql"}
+
+# Extract the host from the GraphQL endpoint for proxy headers
+GRAPHQL_HOST=$(echo $GRAPHQL_ENDPOINT | sed -E 's|^https?://([^/]+).*|\1|')
+
 echo "========================================"
 echo "Starting ISO Easy Web EC2 Setup"
 echo "Domain: $DOMAIN_NAME"
 echo "SSL Enabled: $ENABLE_SSL"
+echo "GraphQL Endpoint: $GRAPHQL_ENDPOINT"
+echo "GraphQL Host: $GRAPHQL_HOST"
 echo "========================================"
 
 # Update system packages
@@ -81,11 +98,11 @@ server {
     # GraphQL API proxy to avoid CORS issues
     location /api/graphql {
         # Proxy to the GraphQL server
-        proxy_pass https://dashboard.isoeasy.app/api/graphql;
+        proxy_pass $GRAPHQL_ENDPOINT;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
         proxy_set_header Connection 'upgrade';
-        proxy_set_header Host dashboard.isoeasy.app;
+        proxy_set_header Host $GRAPHQL_HOST;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto \$scheme;
@@ -159,11 +176,11 @@ server {
     # GraphQL API proxy to avoid CORS issues
     location /api/graphql {
         # Proxy to the GraphQL server
-        proxy_pass https://dashboard.isoeasy.app/api/graphql;
+        proxy_pass $GRAPHQL_ENDPOINT;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
         proxy_set_header Connection 'upgrade';
-        proxy_set_header Host dashboard.isoeasy.app;
+        proxy_set_header Host $GRAPHQL_HOST;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto \$scheme;
@@ -319,14 +336,16 @@ fi
 
 echo "========================================"
 echo "To deploy updates:"
-echo "1. Build your Next.js app: npm run build"
-echo "2. Copy the 'out' directory to the server"
-echo "3. Run this script again to update the files"
+echo "1. Create a .env file with NEXT_PUBLIC_GRAPHQL_ENDPOINT=your_endpoint"
+echo "2. Build your Next.js app: npm run build"
+echo "3. Copy the 'out' directory to the server"
+echo "4. Run this script again to update the files"
 echo ""
 echo "GraphQL Proxy Setup:"
-echo "- Frontend requests to /api/graphql are proxied to dashboard.isoeasy.app"
+echo "- Frontend requests to /api/graphql are proxied to: $GRAPHQL_ENDPOINT"
 echo "- CORS issues are automatically handled by nginx"
-echo "- Set NEXT_PUBLIC_GRAPHQL_ENDPOINT=/api/graphql in your environment"
+echo "- Configure GraphQL endpoint in .env file: NEXT_PUBLIC_GRAPHQL_ENDPOINT=your_endpoint"
+echo "- Default endpoint: https://dashboard.isoeasy.app/api/graphql"
 echo ""
 echo "Usage examples:"
 echo "  ./ec2-setup.sh yourdomain.com false"
