@@ -78,6 +78,43 @@ server {
 
     # SSL certificates will be configured by Certbot
 
+    # GraphQL API proxy to avoid CORS issues
+    location /api/graphql {
+        # Proxy to the GraphQL server
+        proxy_pass https://dashboard.isoeasy.app/api/graphql;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host dashboard.isoeasy.app;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_set_header X-Forwarded-Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+        
+        # CORS headers for GraphQL requests
+        add_header Access-Control-Allow-Origin "https://$DOMAIN_NAME" always;
+        add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+        add_header Access-Control-Allow-Headers "Content-Type, Authorization, Accept, Origin, User-Agent, DNT, Cache-Control, X-Mx-ReqToken, Keep-Alive, X-Requested-With, If-Modified-Since" always;
+        add_header Access-Control-Allow-Credentials true always;
+        
+        # Handle preflight OPTIONS requests
+        if (\$request_method = 'OPTIONS') {
+            add_header Access-Control-Allow-Origin "https://$DOMAIN_NAME";
+            add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+            add_header Access-Control-Allow-Headers "Content-Type, Authorization, Accept, Origin, User-Agent, DNT, Cache-Control, X-Mx-ReqToken, Keep-Alive, X-Requested-With, If-Modified-Since";
+            add_header Access-Control-Allow-Credentials true;
+            add_header Content-Length 0;
+            add_header Content-Type text/plain;
+            return 204;
+        }
+        
+        # Timeout settings
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
+
     location / {
         try_files \$uri \$uri.html \$uri/ /index.html;
     }
@@ -118,6 +155,43 @@ server {
 
     root $APP_DIR;
     index index.html;
+
+    # GraphQL API proxy to avoid CORS issues
+    location /api/graphql {
+        # Proxy to the GraphQL server
+        proxy_pass https://dashboard.isoeasy.app/api/graphql;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host dashboard.isoeasy.app;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_set_header X-Forwarded-Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+        
+        # CORS headers for GraphQL requests (HTTP version)
+        add_header Access-Control-Allow-Origin "http://$DOMAIN_NAME" always;
+        add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+        add_header Access-Control-Allow-Headers "Content-Type, Authorization, Accept, Origin, User-Agent, DNT, Cache-Control, X-Mx-ReqToken, Keep-Alive, X-Requested-With, If-Modified-Since" always;
+        add_header Access-Control-Allow-Credentials true always;
+        
+        # Handle preflight OPTIONS requests
+        if (\$request_method = 'OPTIONS') {
+            add_header Access-Control-Allow-Origin "http://$DOMAIN_NAME";
+            add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+            add_header Access-Control-Allow-Headers "Content-Type, Authorization, Accept, Origin, User-Agent, DNT, Cache-Control, X-Mx-ReqToken, Keep-Alive, X-Requested-With, If-Modified-Since";
+            add_header Access-Control-Allow-Credentials true;
+            add_header Content-Length 0;
+            add_header Content-Type text/plain;
+            return 204;
+        }
+        
+        # Timeout settings
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
 
     location / {
         try_files \$uri \$uri.html \$uri/ /index.html;
@@ -235,10 +309,12 @@ if [ "$ENABLE_SSL" = "true" ]; then
     echo "========================================"
     echo "Setup Complete!"
     echo "Your ISO Easy Web application is now running with HTTPS on $DOMAIN_NAME"
+    echo "GraphQL endpoint available at: https://$DOMAIN_NAME/api/graphql"
 else
     echo "========================================"
     echo "Setup Complete!"
     echo "Your ISO Easy Web application is now running on http://$DOMAIN_NAME"
+    echo "GraphQL endpoint available at: http://$DOMAIN_NAME/api/graphql"
 fi
 
 echo "========================================"
@@ -246,6 +322,11 @@ echo "To deploy updates:"
 echo "1. Build your Next.js app: npm run build"
 echo "2. Copy the 'out' directory to the server"
 echo "3. Run this script again to update the files"
+echo ""
+echo "GraphQL Proxy Setup:"
+echo "- Frontend requests to /api/graphql are proxied to dashboard.isoeasy.app"
+echo "- CORS issues are automatically handled by nginx"
+echo "- Set NEXT_PUBLIC_GRAPHQL_ENDPOINT=/api/graphql in your environment"
 echo ""
 echo "Usage examples:"
 echo "  ./ec2-setup.sh yourdomain.com false"
