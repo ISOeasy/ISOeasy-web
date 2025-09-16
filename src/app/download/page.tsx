@@ -2,9 +2,10 @@
 import React, { useState, useMemo } from 'react';
 import { Container, Row, Col, Card, Button, Spinner, Alert } from 'react-bootstrap';
 import Link from 'next/link';
-import { FaWindows, FaApple, FaLinux, FaMobile } from 'react-icons/fa';
+import { FaWindows, FaApple, FaLinux } from 'react-icons/fa';
 import { SiAndroid } from 'react-icons/si';
 import { useGetBuildsByPlatformQuery, useGenerateSignedUrlMutation, Platform } from '@/generated/graphql';
+import NoBuildComingSoon from '@/components/landingpagecomponents/NoBuildComingSoon';
 import './download.css';
 
 // Type definitions
@@ -81,9 +82,6 @@ const DownloadPage: React.FC = () => {
         return platforms.find(p => p.id === id);
     };
 
-    const getMobilePlatforms = (): PlatformInfo[] => {
-        return platforms.filter(p => p.id === 'ios' || p.id === 'android');
-    };
 
     // Format file size helper
     const formatFileSize = (bytes?: number | null): string => {
@@ -129,8 +127,8 @@ const DownloadPage: React.FC = () => {
                     </Col>
                 </Row>
 
-                <Row className="mb-5">
-                    <Col lg={3} md={4} sm={6} xs={12} className="mb-4">
+                <Row className="mb-5 platform-buttons-row">
+                    <Col className="mb-2">
                         <Card className="platform-selector h-100"
                             onClick={() => handlePlatformSelect('windows')}
                             style={{
@@ -140,16 +138,16 @@ const DownloadPage: React.FC = () => {
                                 transition: 'all 0.3s ease',
                                 border: '1px solid var(--primary-color)'
                             }}>
-                            <Card.Body className="d-flex flex-column align-items-center justify-content-center p-4">
-                                <div className="mb-3">
-                                    <FaWindows size={48} />
+                            <Card.Body className="d-flex flex-column align-items-center justify-content-center p-1 p-md-4">
+                                <div className="mb-1 mb-md-3">
+                                    <FaWindows className="platform-icon" size={48} />
                                 </div>
-                                <h4>Windows</h4>
+                                <h5 className="mb-0 platform-title">Windows</h5>
                             </Card.Body>
                         </Card>
                     </Col>
 
-                    <Col lg={3} md={4} sm={6} xs={12} className="mb-4">
+                    <Col className="mb-2">
                         <Card className="platform-selector h-100"
                             onClick={() => handlePlatformSelect('macos')}
                             style={{
@@ -159,16 +157,16 @@ const DownloadPage: React.FC = () => {
                                 transition: 'all 0.3s ease',
                                 border: '1px solid var(--primary-color)'
                             }}>
-                            <Card.Body className="d-flex flex-column align-items-center justify-content-center p-4">
-                                <div className="mb-3">
-                                    <FaApple size={48} />
+                            <Card.Body className="d-flex flex-column align-items-center justify-content-center p-1 p-md-4">
+                                <div className="mb-1 mb-md-3">
+                                    <FaApple className="platform-icon" size={48} />
                                 </div>
-                                <h4>macOS</h4>
+                                <h5 className="mb-0 platform-title">macOS</h5>
                             </Card.Body>
                         </Card>
                     </Col>
 
-                    <Col lg={3} md={4} sm={6} xs={12} className="mb-4">
+                    <Col className="mb-2">
                         <Card className="platform-selector h-100"
                             onClick={() => handlePlatformSelect('linux')}
                             style={{
@@ -178,30 +176,49 @@ const DownloadPage: React.FC = () => {
                                 transition: 'all 0.3s ease',
                                 border: '1px solid var(--primary-color)'
                             }}>
-                            <Card.Body className="d-flex flex-column align-items-center justify-content-center p-4">
-                                <div className="mb-3">
-                                    <FaLinux size={48} />
+                            <Card.Body className="d-flex flex-column align-items-center justify-content-center p-1 p-md-4">
+                                <div className="mb-1 mb-md-3">
+                                    <FaLinux className="platform-icon" size={48} />
                                 </div>
-                                <h4>Linux</h4>
+                                <h5 className="mb-0 platform-title">Linux</h5>
                             </Card.Body>
                         </Card>
                     </Col>
 
-                    <Col lg={3} md={4} sm={6} xs={12} className="mb-4">
+                    <Col className="mb-2">
                         <Card className="platform-selector h-100"
-                            onClick={() => handlePlatformSelect('mobile')}
+                            onClick={() => handlePlatformSelect('ios')}
                             style={{
                                 cursor: 'pointer',
-                                backgroundColor: selectedPlatform === 'mobile' ? 'var(--primary-color)' : 'white',
-                                color: selectedPlatform === 'mobile' ? 'var(--secondary-color)' : 'var(--primary-color)',
+                                backgroundColor: selectedPlatform === 'ios' ? 'var(--primary-color)' : 'white',
+                                color: selectedPlatform === 'ios' ? 'var(--secondary-color)' : 'var(--primary-color)',
                                 transition: 'all 0.3s ease',
                                 border: '1px solid var(--primary-color)'
                             }}>
-                            <Card.Body className="d-flex flex-column align-items-center justify-content-center p-4">
-                                <div className="mb-3">
-                                    <FaMobile size={48} />
+                            <Card.Body className="d-flex flex-column align-items-center justify-content-center p-1 p-md-4">
+                                <div className="mb-1 mb-md-3">
+                                    <FaApple className="platform-icon" size={48} />
                                 </div>
-                                <h4>Mobile</h4>
+                                <h5 className="mb-0 platform-title">iOS</h5>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+
+                    <Col className="mb-2">
+                        <Card className="platform-selector h-100"
+                            onClick={() => handlePlatformSelect('android')}
+                            style={{
+                                cursor: 'pointer',
+                                backgroundColor: selectedPlatform === 'android' ? 'var(--primary-color)' : 'white',
+                                color: selectedPlatform === 'android' ? 'var(--secondary-color)' : 'var(--primary-color)',
+                                transition: 'all 0.3s ease',
+                                border: '1px solid var(--primary-color)'
+                            }}>
+                            <Card.Body className="d-flex flex-column align-items-center justify-content-center p-1 p-md-4">
+                                <div className="mb-1 mb-md-3">
+                                    <SiAndroid className="platform-icon" size={48} />
+                                </div>
+                                <h5 className="mb-0 platform-title">Android</h5>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -223,43 +240,6 @@ const DownloadPage: React.FC = () => {
                                             <p>Unable to load build information. Please try again later.</p>
                                             <small>{error.message}</small>
                                         </Alert>
-                                    ) : selectedPlatform === 'mobile' ? (
-                                        <Row>
-                                            {getMobilePlatforms().map((platform) => (
-                                                <Col md={6} key={platform.id} className="mb-4">
-                                                    <div className="p-4 text-center">
-                                                        {platform.icon}
-                                                        <h3 className="mt-3">{platform.name}</h3>
-                                                        <p className="mb-4">{platform.requirements}</p>
-                                                        {data?.buildsByPlatform?.builds
-                                                            ?.filter(build => build.platform === platform.graphqlPlatform)
-                                                            .map((build, idx) => (
-                                                                <Button
-                                                                    key={build.id}
-                                                                    variant={idx === 0 ? "vision" : "outline-vision"}
-                                                                    onClick={() => handleDownload(build.id)}
-                                                                    className="mb-2 w-100"
-                                                                    disabled={generatingUrl}
-                                                                >
-                                                                    {generatingUrl ? (
-                                                                        <>
-                                                                            <Spinner size="sm" className="me-2" />
-                                                                            Generating...
-                                                                        </>
-                                                                    ) : (
-                                                                        `${build.appName} v${build.version}`
-                                                                    )}
-                                                                </Button>
-                                                            ))}
-                                                        {data?.buildsByPlatform?.builds
-                                                            ?.filter(build => build.platform === platform.graphqlPlatform)
-                                                            .length === 0 && (
-                                                                <p className="text-muted">No builds available</p>
-                                                            )}
-                                                    </div>
-                                                </Col>
-                                            ))}
-                                        </Row>
                                     ) : (
                                         <>
                                             <h3 className="mb-4">Download ISO Easy for {getPlatformById(selectedPlatform)?.name}</h3>
@@ -300,8 +280,8 @@ const DownloadPage: React.FC = () => {
                                                             </div>
                                                         ))}
                                                         {data?.buildsByPlatform?.builds?.length === 0 && (
-                                                            <div className="text-center p-4">
-                                                                <p className="text-muted">No builds available for this platform</p>
+                                                            <div className="mb-4">
+                                                                <NoBuildComingSoon platformName={getPlatformById(selectedPlatform)?.name} />
                                                             </div>
                                                         )}
                                                     </div>
