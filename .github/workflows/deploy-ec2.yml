@@ -43,6 +43,22 @@ jobs:
           aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Clean and prepare EC2 directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.EC2_HOST }}
+          username: ${{ env.EC2_USERNAME }}
+          key_path: ${{ env.EC2_SSH_KEY_PATH }}
+          script: |
+            # Remove existing directory completely
+            sudo rm -rf /var/www/iso-easy-web
+            
+            # Create fresh directory
+            sudo mkdir -p /var/www/iso-easy-web
+            
+            # Set proper permissions
+            sudo chown -R ${{ env.EC2_USERNAME }}:${{ env.EC2_USERNAME }} /var/www/iso-easy-web
+
       - name: Transfer project files to EC2
         uses: appleboy/scp-action@master
         with:
@@ -60,17 +76,12 @@ jobs:
           username: ${{ env.EC2_USERNAME }}
           key_path: ${{ env.EC2_SSH_KEY_PATH }}
           script: |
-            # Create directory if it doesn't exist
-            sudo mkdir -p /var/www/iso-easy-web
-            
-            # Set proper permissions
-            sudo chown -R ${{ env.EC2_USERNAME }}:${{ env.EC2_USERNAME }} /var/www/iso-easy-web
-            
             # Make setup script executable
             chmod +x /var/www/iso-easy-web/ec2-setup.sh
             
             # Execute the setup script with SSL enabled
             cd /var/www/iso-easy-web
-            sudo ./ec2-setup.sh isoeasy.app true
+            npm install
+            sudo ./ec2-setup.sh isoeasy.app true https://dashboard.isoeasy.app/api/graphql
             
             echo "Deployment completed successfully!"
