@@ -9,13 +9,11 @@ set -e
 # Default domain name (can be overridden with command line argument)
 DOMAIN_NAME=${1:-"isoeasy.app"}
 ENABLE_SSL=${2:-"false"}
-GRAPHQL_SERVER=${3:-"http://localhost:4000"}
 
 echo "========================================"
 echo "Starting ISO Easy Web EC2 Setup"
 echo "Domain: $DOMAIN_NAME"
 echo "SSL Enabled: $ENABLE_SSL"
-echo "GraphQL Server: $GRAPHQL_SERVER"
 echo "========================================"
 
 # Update system packages
@@ -48,41 +46,6 @@ if ! command -v nginx &> /dev/null; then
 fi
 echo "Nginx successfully installed!"
 
-# Check for .env file to get GraphQL endpoint
-if [ -f ".env" ]; then
-    echo "Reading GraphQL endpoint from .env file..."
-    ENV_GRAPHQL_SERVER=$(grep "^NEXT_PUBLIC_GRAPHQL_ENDPOINT=" .env | cut -d '=' -f2 | tr -d '"' | tr -d "'")
-    if [ ! -z "$ENV_GRAPHQL_SERVER" ]; then
-        GRAPHQL_SERVER="$ENV_GRAPHQL_SERVER"
-        echo "Using GraphQL server from .env: $GRAPHQL_SERVER"
-    fi
-fi
-
-# Validate GraphQL server
-if [ -z "$GRAPHQL_SERVER" ]; then
-    echo "ERROR: GraphQL server not specified. Please provide it as the third argument or set NEXT_PUBLIC_GRAPHQL_ENDPOINT in .env file."
-    exit 1
-fi
-
-echo "GraphQL server configured: $GRAPHQL_SERVER"
-
-# Test GraphQL server connectivity
-echo "Testing GraphQL server connectivity..."
-if curl -s --connect-timeout 10 --max-time 30 "$GRAPHQL_SERVER/api/graphql" > /dev/null 2>&1; then
-    echo "✅ GraphQL server is reachable: $GRAPHQL_SERVER/api/graphql"
-elif curl -s --connect-timeout 10 --max-time 30 -X POST -H "Content-Type: application/json" -d '{"query":"{ __schema { queryType { name } } }"}' "$GRAPHQL_SERVER/api/graphql" > /dev/null 2>&1; then
-    echo "✅ GraphQL server is reachable (POST): $GRAPHQL_SERVER/api/graphql"
-else
-    echo "⚠️  WARNING: GraphQL server may not be reachable: $GRAPHQL_SERVER/api/graphql"
-    echo "   This could cause 502 errors. Please ensure:"
-    echo "   1. The GraphQL server is running"
-    echo "   2. The endpoint URL is correct"
-    echo "   3. Firewall allows connections to the GraphQL port"
-    echo "   4. The GraphQL server accepts connections from this server"
-    echo ""
-    echo "   Continuing with setup, but you may need to fix the GraphQL endpoint later."
-fi
-
 # Create directory for the app if it doesn't exist
 echo "Setting up application directory..."
 APP_DIR="/var/www/iso-easy-web/out"
@@ -114,33 +77,6 @@ server {
     index index.html;
 
     # SSL certificates will be configured by Certbot
-
-    # API proxy - proxy to GraphQL endpoint
-    location = /api/graphql {
-        proxy_pass $GRAPHQL_SERVER/api/graphql;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host \$host;
-        proxy_cache_bypass \$http_upgrade;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
-
-        # Debug headers
-        add_header X-Debug-Path \$request_uri;
-        add_header X-Debug-Upstream \$upstream_addr;
-        add_header X-Debug-Backend \$upstream_addr;
-        add_header X-Debug-Proxy-URL "$GRAPHQL_SERVER/api/graphql";
-
-        # Add error handling
-        proxy_intercept_errors on;
-        error_page 502 503 504 /50x.html;
-
-        # Log proxy requests for debugging
-        access_log /var/log/nginx/graphql_proxy.log;
-        error_log /var/log/nginx/graphql_proxy_error.log;
-    }
 
     location / {
         try_files \$uri \$uri.html \$uri/ /index.html;
@@ -182,33 +118,6 @@ server {
 
     root $APP_DIR;
     index index.html;
-
-    # API proxy - proxy to GraphQL endpoint
-    location = /api/graphql {
-        proxy_pass $GRAPHQL_SERVER/api/graphql;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host \$host;
-        proxy_cache_bypass \$http_upgrade;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
-
-        # Debug headers
-        add_header X-Debug-Path \$request_uri;
-        add_header X-Debug-Upstream \$upstream_addr;
-        add_header X-Debug-Backend \$upstream_addr;
-        add_header X-Debug-Proxy-URL "$GRAPHQL_SERVER/api/graphql";
-
-        # Add error handling
-        proxy_intercept_errors on;
-        error_page 502 503 504 /50x.html;
-
-        # Log proxy requests for debugging
-        access_log /var/log/nginx/graphql_proxy.log;
-        error_log /var/log/nginx/graphql_proxy_error.log;
-    }
 
     location / {
         try_files \$uri \$uri.html \$uri/ /index.html;
@@ -339,22 +248,6 @@ echo "2. Copy the 'out' directory to the server"
 echo "3. Run this script again to update the files"
 echo ""
 echo "Usage examples:"
-echo "  ./ec2-setup.sh yourdomain.com false http://localhost:4000"
-echo "  ./ec2-setup.sh yourdomain.com true https://dashboard.isoeasy.app"
-echo "  ./ec2-setup.sh yourdomain.com true  # Will read from .env file"
-echo ""
-echo "API Proxy Configuration:"
-echo "  - Frontend requests: https://yourdomain.com/api/graphql"
-echo "  - Rewritten to: /graphql (strips /api/ prefix)"
-echo "  - Proxied to: $GRAPHQL_SERVER/api/graphql"
-echo "  - No CORS issues: All requests appear from same origin"
-echo ""
-echo "Troubleshooting 502 Errors:"
-echo "  - Check GraphQL server: curl -I $GRAPHQL_SERVER/api/graphql"
-echo "  - Check Nginx logs: sudo tail -f /var/log/nginx/graphql_proxy_error.log"
-echo "  - Check Nginx access: sudo tail -f /var/log/nginx/graphql_proxy.log"
-echo "  - Test GraphQL directly: curl -X POST -H 'Content-Type: application/json' -d '{\"query\":\"{ __schema { queryType { name } } }\"}' $GRAPHQL_SERVER/api/graphql"
-echo "  - Test proxy rewrite: curl -I https://yourdomain.com/api/graphql"
-echo "  - Check debug headers: curl -I https://yourdomain.com/api/graphql -v"
-echo "  - Restart Nginx: sudo systemctl restart nginx"
+echo "  ./ec2-setup.sh yourdomain.com false"
+echo "  ./ec2-setup.sh yourdomain.com true"
 echo "========================================"

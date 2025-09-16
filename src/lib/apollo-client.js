@@ -3,7 +3,7 @@ import { setContext } from '@apollo/client/link/context';
 
 // Create HTTP link - use the proxied endpoint to avoid CORS issues
 const httpLink = createHttpLink({
-    uri: '/api/graphql',
+    uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT || 'http://localhost:4000/api/graphql',
 });
 
 // Create auth link for adding authentication headers
