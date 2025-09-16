@@ -66,6 +66,23 @@ fi
 
 echo "GraphQL endpoint configured: $GRAPHQL_ENDPOINT"
 
+# Test GraphQL endpoint connectivity
+echo "Testing GraphQL endpoint connectivity..."
+if curl -s --connect-timeout 10 --max-time 30 "$GRAPHQL_ENDPOINT" > /dev/null 2>&1; then
+    echo "✅ GraphQL endpoint is reachable: $GRAPHQL_ENDPOINT"
+elif curl -s --connect-timeout 10 --max-time 30 -X POST -H "Content-Type: application/json" -d '{"query":"{ __schema { queryType { name } } }"}' "$GRAPHQL_ENDPOINT" > /dev/null 2>&1; then
+    echo "✅ GraphQL endpoint is reachable (POST): $GRAPHQL_ENDPOINT"
+else
+    echo "⚠️  WARNING: GraphQL endpoint may not be reachable: $GRAPHQL_ENDPOINT"
+    echo "   This could cause 502 errors. Please ensure:"
+    echo "   1. The GraphQL server is running"
+    echo "   2. The endpoint URL is correct"
+    echo "   3. Firewall allows connections to the GraphQL port"
+    echo "   4. The GraphQL server accepts connections from this server"
+    echo ""
+    echo "   Continuing with setup, but you may need to fix the GraphQL endpoint later."
+fi
+
 # Create directory for the app if it doesn't exist
 echo "Setting up application directory..."
 APP_DIR="/var/www/iso-easy-web"
@@ -104,6 +121,7 @@ server {
 
     # GraphQL API proxy
     location /api/graphql {
+        # Test if GraphQL endpoint is reachable
         proxy_pass $GRAPHQL_ENDPOINT;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
@@ -115,6 +133,14 @@ server {
         proxy_cache_bypass \$http_upgrade;
         proxy_read_timeout 300s;
         proxy_connect_timeout 75s;
+        
+        # Add error handling
+        proxy_intercept_errors on;
+        error_page 502 503 504 /50x.html;
+        
+        # Log proxy requests for debugging
+        access_log /var/log/nginx/graphql_proxy.log;
+        error_log /var/log/nginx/graphql_proxy_error.log;
     }
 
     location / {
@@ -160,6 +186,7 @@ server {
 
     # GraphQL API proxy
     location /api/graphql {
+        # Test if GraphQL endpoint is reachable
         proxy_pass $GRAPHQL_ENDPOINT;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
@@ -171,6 +198,14 @@ server {
         proxy_cache_bypass \$http_upgrade;
         proxy_read_timeout 300s;
         proxy_connect_timeout 75s;
+        
+        # Add error handling
+        proxy_intercept_errors on;
+        error_page 502 503 504 /50x.html;
+        
+        # Log proxy requests for debugging
+        access_log /var/log/nginx/graphql_proxy.log;
+        error_log /var/log/nginx/graphql_proxy_error.log;
     }
 
     location / {
@@ -310,4 +345,11 @@ echo "GraphQL Proxy Configuration:"
 echo "  - Frontend requests: https://yourdomain.com/api/graphql"
 echo "  - Proxied to: $GRAPHQL_ENDPOINT"
 echo "  - No CORS issues: All requests appear from same origin"
+echo ""
+echo "Troubleshooting 502 Errors:"
+echo "  - Check GraphQL endpoint: curl -I $GRAPHQL_ENDPOINT"
+echo "  - Check Nginx logs: sudo tail -f /var/log/nginx/graphql_proxy_error.log"
+echo "  - Check Nginx access: sudo tail -f /var/log/nginx/graphql_proxy.log"
+echo "  - Test GraphQL directly: curl -X POST -H 'Content-Type: application/json' -d '{\"query\":\"{ __schema { queryType { name } } }\"}' $GRAPHQL_ENDPOINT"
+echo "  - Restart Nginx: sudo systemctl restart nginx"
 echo "========================================"
