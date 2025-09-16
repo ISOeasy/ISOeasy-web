@@ -119,20 +119,22 @@ server {
 
     # SSL certificates will be configured by Certbot
 
-    # GraphQL API proxy
+    # API proxy
     location /api/graphql {
-        # Test if GraphQL endpoint is reachable
+        rewrite ^/api/graphql(.*) /graphql\$1 break;
         proxy_pass $GRAPHQL_ENDPOINT;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto \$scheme;
-        proxy_cache_bypass \$http_upgrade;
-        proxy_read_timeout 300s;
-        proxy_connect_timeout 75s;
+        
+        # Debug headers
+        add_header X-Debug-Path \$request_uri;
+        add_header X-Debug-Upstream \$upstream_addr;
         
         # Add error handling
         proxy_intercept_errors on;
@@ -184,20 +186,22 @@ server {
     root $APP_DIR;
     index index.html;
 
-    # GraphQL API proxy
+    # API proxy
     location /api/graphql {
-        # Test if GraphQL endpoint is reachable
+        rewrite ^/api/graphql(.*) /graphql\$1 break;
         proxy_pass $GRAPHQL_ENDPOINT;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto \$scheme;
-        proxy_cache_bypass \$http_upgrade;
-        proxy_read_timeout 300s;
-        proxy_connect_timeout 75s;
+        
+        # Debug headers
+        add_header X-Debug-Path \$request_uri;
+        add_header X-Debug-Upstream \$upstream_addr;
         
         # Add error handling
         proxy_intercept_errors on;
@@ -341,8 +345,9 @@ echo "  ./ec2-setup.sh yourdomain.com false http://localhost:4000/graphql"
 echo "  ./ec2-setup.sh yourdomain.com true https://api.yourdomain.com/graphql"
 echo "  ./ec2-setup.sh yourdomain.com true  # Will read from .env file"
 echo ""
-echo "GraphQL Proxy Configuration:"
+echo "API Proxy Configuration:"
 echo "  - Frontend requests: https://yourdomain.com/api/graphql"
+echo "  - Rewritten to: /graphql (strips /api/ prefix)"
 echo "  - Proxied to: $GRAPHQL_ENDPOINT"
 echo "  - No CORS issues: All requests appear from same origin"
 echo ""
@@ -351,5 +356,7 @@ echo "  - Check GraphQL endpoint: curl -I $GRAPHQL_ENDPOINT"
 echo "  - Check Nginx logs: sudo tail -f /var/log/nginx/graphql_proxy_error.log"
 echo "  - Check Nginx access: sudo tail -f /var/log/nginx/graphql_proxy.log"
 echo "  - Test GraphQL directly: curl -X POST -H 'Content-Type: application/json' -d '{\"query\":\"{ __schema { queryType { name } } }\"}' $GRAPHQL_ENDPOINT"
+echo "  - Test proxy rewrite: curl -I https://yourdomain.com/api/graphql"
+echo "  - Check debug headers: curl -I https://yourdomain.com/api/graphql -v"
 echo "  - Restart Nginx: sudo systemctl restart nginx"
 echo "========================================"
