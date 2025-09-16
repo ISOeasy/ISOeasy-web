@@ -9,13 +9,13 @@ set -e
 # Default domain name (can be overridden with command line argument)
 DOMAIN_NAME=${1:-"isoeasy.app"}
 ENABLE_SSL=${2:-"false"}
-GRAPHQL_ENDPOINT=${3:-"http://localhost:4000/graphql"}
+GRAPHQL_SERVER=${3:-"http://localhost:4000"}
 
 echo "========================================"
 echo "Starting ISO Easy Web EC2 Setup"
 echo "Domain: $DOMAIN_NAME"
 echo "SSL Enabled: $ENABLE_SSL"
-echo "GraphQL Endpoint: $GRAPHQL_ENDPOINT"
+echo "GraphQL Server: $GRAPHQL_SERVER"
 echo "========================================"
 
 # Update system packages
@@ -51,29 +51,29 @@ echo "Nginx successfully installed!"
 # Check for .env file to get GraphQL endpoint
 if [ -f ".env" ]; then
     echo "Reading GraphQL endpoint from .env file..."
-    ENV_GRAPHQL_ENDPOINT=$(grep "^NEXT_PUBLIC_GRAPHQL_ENDPOINT=" .env | cut -d '=' -f2 | tr -d '"' | tr -d "'")
-    if [ ! -z "$ENV_GRAPHQL_ENDPOINT" ]; then
-        GRAPHQL_ENDPOINT="$ENV_GRAPHQL_ENDPOINT"
-        echo "Using GraphQL endpoint from .env: $GRAPHQL_ENDPOINT"
+    ENV_GRAPHQL_SERVER=$(grep "^NEXT_PUBLIC_GRAPHQL_ENDPOINT=" .env | cut -d '=' -f2 | tr -d '"' | tr -d "'")
+    if [ ! -z "$ENV_GRAPHQL_SERVER" ]; then
+        GRAPHQL_SERVER="$ENV_GRAPHQL_SERVER"
+        echo "Using GraphQL server from .env: $GRAPHQL_SERVER"
     fi
 fi
 
-# Validate GraphQL endpoint
-if [ -z "$GRAPHQL_ENDPOINT" ]; then
-    echo "ERROR: GraphQL endpoint not specified. Please provide it as the third argument or set NEXT_PUBLIC_GRAPHQL_ENDPOINT in .env file."
+# Validate GraphQL server
+if [ -z "$GRAPHQL_SERVER" ]; then
+    echo "ERROR: GraphQL server not specified. Please provide it as the third argument or set NEXT_PUBLIC_GRAPHQL_ENDPOINT in .env file."
     exit 1
 fi
 
-echo "GraphQL endpoint configured: $GRAPHQL_ENDPOINT"
+echo "GraphQL server configured: $GRAPHQL_SERVER"
 
-# Test GraphQL endpoint connectivity
-echo "Testing GraphQL endpoint connectivity..."
-if curl -s --connect-timeout 10 --max-time 30 "$GRAPHQL_ENDPOINT" > /dev/null 2>&1; then
-    echo "✅ GraphQL endpoint is reachable: $GRAPHQL_ENDPOINT"
-elif curl -s --connect-timeout 10 --max-time 30 -X POST -H "Content-Type: application/json" -d '{"query":"{ __schema { queryType { name } } }"}' "$GRAPHQL_ENDPOINT" > /dev/null 2>&1; then
-    echo "✅ GraphQL endpoint is reachable (POST): $GRAPHQL_ENDPOINT"
+# Test GraphQL server connectivity
+echo "Testing GraphQL server connectivity..."
+if curl -s --connect-timeout 10 --max-time 30 "$GRAPHQL_SERVER/api/graphql" > /dev/null 2>&1; then
+    echo "✅ GraphQL server is reachable: $GRAPHQL_SERVER/api/graphql"
+elif curl -s --connect-timeout 10 --max-time 30 -X POST -H "Content-Type: application/json" -d '{"query":"{ __schema { queryType { name } } }"}' "$GRAPHQL_SERVER/api/graphql" > /dev/null 2>&1; then
+    echo "✅ GraphQL server is reachable (POST): $GRAPHQL_SERVER/api/graphql"
 else
-    echo "⚠️  WARNING: GraphQL endpoint may not be reachable: $GRAPHQL_ENDPOINT"
+    echo "⚠️  WARNING: GraphQL server may not be reachable: $GRAPHQL_SERVER/api/graphql"
     echo "   This could cause 502 errors. Please ensure:"
     echo "   1. The GraphQL server is running"
     echo "   2. The endpoint URL is correct"
@@ -115,9 +115,9 @@ server {
 
     # SSL certificates will be configured by Certbot
 
-    # API proxy - pass through /api/graphql unchanged
-    location /api/graphql {
-        proxy_pass $GRAPHQL_ENDPOINT;
+    # API proxy - proxy to GraphQL endpoint
+    location = /api/graphql {
+        proxy_pass $GRAPHQL_SERVER/api/graphql;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -131,6 +131,7 @@ server {
         add_header X-Debug-Path \$request_uri;
         add_header X-Debug-Upstream \$upstream_addr;
         add_header X-Debug-Backend \$upstream_addr;
+        add_header X-Debug-Proxy-URL "$GRAPHQL_SERVER/api/graphql";
 
         # Add error handling
         proxy_intercept_errors on;
@@ -182,9 +183,9 @@ server {
     root $APP_DIR;
     index index.html;
 
-    # API proxy - pass through /api/graphql unchanged
-    location /api/graphql {
-        proxy_pass $GRAPHQL_ENDPOINT;
+    # API proxy - proxy to GraphQL endpoint
+    location = /api/graphql {
+        proxy_pass $GRAPHQL_SERVER/api/graphql;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -198,6 +199,7 @@ server {
         add_header X-Debug-Path \$request_uri;
         add_header X-Debug-Upstream \$upstream_addr;
         add_header X-Debug-Backend \$upstream_addr;
+        add_header X-Debug-Proxy-URL "$GRAPHQL_SERVER/api/graphql";
 
         # Add error handling
         proxy_intercept_errors on;
@@ -337,21 +339,21 @@ echo "2. Copy the 'out' directory to the server"
 echo "3. Run this script again to update the files"
 echo ""
 echo "Usage examples:"
-echo "  ./ec2-setup.sh yourdomain.com false http://localhost:4000/graphql"
-echo "  ./ec2-setup.sh yourdomain.com true https://api.yourdomain.com/graphql"
+echo "  ./ec2-setup.sh yourdomain.com false http://localhost:4000"
+echo "  ./ec2-setup.sh yourdomain.com true https://dashboard.isoeasy.app"
 echo "  ./ec2-setup.sh yourdomain.com true  # Will read from .env file"
 echo ""
 echo "API Proxy Configuration:"
 echo "  - Frontend requests: https://yourdomain.com/api/graphql"
 echo "  - Rewritten to: /graphql (strips /api/ prefix)"
-echo "  - Proxied to: $GRAPHQL_ENDPOINT"
+echo "  - Proxied to: $GRAPHQL_SERVER/api/graphql"
 echo "  - No CORS issues: All requests appear from same origin"
 echo ""
 echo "Troubleshooting 502 Errors:"
-echo "  - Check GraphQL endpoint: curl -I $GRAPHQL_ENDPOINT"
+echo "  - Check GraphQL server: curl -I $GRAPHQL_SERVER/api/graphql"
 echo "  - Check Nginx logs: sudo tail -f /var/log/nginx/graphql_proxy_error.log"
 echo "  - Check Nginx access: sudo tail -f /var/log/nginx/graphql_proxy.log"
-echo "  - Test GraphQL directly: curl -X POST -H 'Content-Type: application/json' -d '{\"query\":\"{ __schema { queryType { name } } }\"}' $GRAPHQL_ENDPOINT"
+echo "  - Test GraphQL directly: curl -X POST -H 'Content-Type: application/json' -d '{\"query\":\"{ __schema { queryType { name } } }\"}' $GRAPHQL_SERVER/api/graphql"
 echo "  - Test proxy rewrite: curl -I https://yourdomain.com/api/graphql"
 echo "  - Check debug headers: curl -I https://yourdomain.com/api/graphql -v"
 echo "  - Restart Nginx: sudo systemctl restart nginx"

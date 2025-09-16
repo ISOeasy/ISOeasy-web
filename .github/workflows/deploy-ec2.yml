@@ -82,6 +82,6 @@ jobs:
             # Execute the setup script with SSL enabled
             cd /var/www/iso-easy-web
             npm install
-            sudo ./ec2-setup.sh isoeasy.app true https://dashboard.isoeasy.app/api/graphql
+            sudo ./ec2-setup.sh isoeasy.app true https://dashboard.isoeasy.app
             
             echo "Deployment completed successfully!"
