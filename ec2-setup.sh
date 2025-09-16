@@ -85,12 +85,8 @@ fi
 
 # Create directory for the app if it doesn't exist
 echo "Setting up application directory..."
-APP_DIR="/var/www/iso-easy-web"
+APP_DIR="/var/www/iso-easy-web/out"
 sudo mkdir -p $APP_DIR
-
-# Copy the out directory contents to the app directory
-echo "Copying static files to web directory..."
-sudo cp -r out/* $APP_DIR/
 
 # Set proper permissions
 echo "Setting proper permissions..."
@@ -119,9 +115,8 @@ server {
 
     # SSL certificates will be configured by Certbot
 
-    # API proxy
+    # API proxy - pass through /api/graphql unchanged
     location /api/graphql {
-        rewrite ^/api/graphql(.*) /graphql\$1 break;
         proxy_pass $GRAPHQL_ENDPOINT;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
@@ -131,15 +126,16 @@ server {
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto \$scheme;
-        
+
         # Debug headers
         add_header X-Debug-Path \$request_uri;
         add_header X-Debug-Upstream \$upstream_addr;
-        
+        add_header X-Debug-Backend \$upstream_addr;
+
         # Add error handling
         proxy_intercept_errors on;
         error_page 502 503 504 /50x.html;
-        
+
         # Log proxy requests for debugging
         access_log /var/log/nginx/graphql_proxy.log;
         error_log /var/log/nginx/graphql_proxy_error.log;
@@ -148,14 +144,14 @@ server {
     location / {
         try_files \$uri \$uri.html \$uri/ /index.html;
     }
-    
+
     # Handle Next.js static files
     location /_next/static/ {
         alias $APP_DIR/_next/static/;
         expires 1y;
         add_header Cache-Control "public, immutable";
     }
-    
+
     # Handle other static assets
     location /static/ {
         alias $APP_DIR/static/;
@@ -186,9 +182,8 @@ server {
     root $APP_DIR;
     index index.html;
 
-    # API proxy
-    location /api/graphql/ {
-        rewrite ^/api/graphql(.*) /graphql\$1 break;
+    # API proxy - pass through /api/graphql unchanged
+    location /api/graphql {
         proxy_pass $GRAPHQL_ENDPOINT;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
@@ -198,15 +193,16 @@ server {
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto \$scheme;
-        
+
         # Debug headers
         add_header X-Debug-Path \$request_uri;
         add_header X-Debug-Upstream \$upstream_addr;
-        
+        add_header X-Debug-Backend \$upstream_addr;
+
         # Add error handling
         proxy_intercept_errors on;
         error_page 502 503 504 /50x.html;
-        
+
         # Log proxy requests for debugging
         access_log /var/log/nginx/graphql_proxy.log;
         error_log /var/log/nginx/graphql_proxy_error.log;
@@ -215,14 +211,14 @@ server {
     location / {
         try_files \$uri \$uri.html \$uri/ /index.html;
     }
-    
+
     # Handle Next.js static files
     location /_next/static/ {
         alias $APP_DIR/_next/static/;
         expires 1y;
         add_header Cache-Control "public, immutable";
     }
-    
+
     # Handle other static assets
     location /static/ {
         alias $APP_DIR/static/;
@@ -271,7 +267,7 @@ sudo systemctl enable nginx
 # Set up SSL with Certbot if enabled
 if [ "$ENABLE_SSL" = "true" ]; then
     echo "Setting up SSL with Let's Encrypt..."
-    
+
     # Install Certbot
     if command -v apt-get &> /dev/null; then
         sudo apt-get install -y certbot python3-certbot-nginx
@@ -284,10 +280,10 @@ if [ "$ENABLE_SSL" = "true" ]; then
         fi
         sudo yum install -y certbot python3-certbot-nginx || sudo yum install -y certbot
     fi
-    
+
     # Get server's public IP for troubleshooting
     PUBLIC_IP=$(curl -s http://checkip.amazonaws.com || wget -qO- http://checkip.amazonaws.com)
-    
+
     # Obtain SSL certificate
     echo "Obtaining SSL certificate for $DOMAIN_NAME..."
     if sudo certbot --nginx -d $DOMAIN_NAME --non-interactive --agree-tos --email admin@$DOMAIN_NAME --redirect; then
@@ -320,11 +316,11 @@ if [ "$ENABLE_SSL" = "true" ]; then
             sudo systemctl start nginx
         fi
     fi
-    
+
     # Setup automatic renewal
     echo "Setting up automatic SSL certificate renewal..."
     echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew -q" | sudo tee -a /etc/crontab > /dev/null
-    
+
     echo "========================================"
     echo "Setup Complete!"
     echo "Your ISO Easy Web application is now running with HTTPS on $DOMAIN_NAME"
