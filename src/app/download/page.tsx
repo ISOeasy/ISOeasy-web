@@ -1,11 +1,12 @@
 "use client";
 import React, { useState, useMemo } from 'react';
-import { Container, Row, Col, Card, Button, Spinner, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, Spinner, Alert } from 'react-bootstrap';
 import Link from 'next/link';
 import { FaWindows, FaApple, FaLinux } from 'react-icons/fa';
 import { SiAndroid } from 'react-icons/si';
-import { useGetBuildsByPlatformQuery, useGenerateSignedUrlMutation, Platform } from '@/generated/graphql';
+import { useGetBuildsByPlatformQuery, Platform } from '@/generated/graphql';
 import NoBuildComingSoon from '@/components/landingpagecomponents/NoBuildComingSoon';
+import DownloadButton from '@/components/shared/DownloadButton';
 import './download.css';
 
 // Type definitions
@@ -71,8 +72,6 @@ const DownloadPage: React.FC = () => {
         skip: !selectedPlatformInfo
     });
 
-    // Generate signed URL mutation
-    const [generateSignedUrl, { loading: generatingUrl }] = useGenerateSignedUrlMutation();
 
     const handlePlatformSelect = (platformId: PlatformId): void => {
         setSelectedPlatform(platformId);
@@ -91,29 +90,6 @@ const DownloadPage: React.FC = () => {
         return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i];
     };
 
-    // Handle download with signed URL
-    const handleDownload = async (buildId: string): Promise<void> => {
-        try {
-            const result = await generateSignedUrl({
-                variables: {
-                    input: {
-                        buildId: buildId
-                    }
-                }
-            });
-
-            if (result.data?.generateSignedUrl?.signedUrl) {
-                // Open the signed URL in a new tab/window to trigger download
-                window.open(result.data.generateSignedUrl.signedUrl, '_blank');
-            } else {
-                console.error('Failed to generate signed URL');
-                alert('Failed to generate download link. Please try again.');
-            }
-        } catch (error) {
-            console.error('Error generating signed URL:', error);
-            alert('Error generating download link. Please try again.');
-        }
-    };
 
     return (
         <div className="download-page" style={{ paddingTop: '100px', paddingBottom: '50px' }}>
@@ -249,9 +225,16 @@ const DownloadPage: React.FC = () => {
                                                         {data?.buildsByPlatform?.builds?.map((build) => (
                                                             <div key={build.id} className="version-item p-3 mb-3" style={{ border: '1px solid var(--secondary-color)', borderRadius: '8px' }}>
                                                                 <Row className="align-items-center">
-                                                                    <Col xs={8}>
+                                                                    <Col xs={10}>
                                                                         <h5 className="mb-0">{build.appName} v{build.version}</h5>
                                                                         <small>Size: {formatFileSize(build.fileSize)}</small>
+                                                                        {build.fileName && (
+                                                                            <div className="mt-1">
+                                                                                <small className="text-muted">
+                                                                                    <strong>File:</strong> {build.fileName}
+                                                                                </small>
+                                                                            </div>
+                                                                        )}
                                                                         {build.changelog && (
                                                                             <div className="mt-2">
                                                                                 <small className="text-muted">
@@ -260,21 +243,8 @@ const DownloadPage: React.FC = () => {
                                                                             </div>
                                                                         )}
                                                                     </Col>
-                                                                    <Col xs={4} className="text-end">
-                                                                        <Button
-                                                                            variant="vision"
-                                                                            onClick={() => handleDownload(build.id)}
-                                                                            disabled={generatingUrl}
-                                                                        >
-                                                                            {generatingUrl ? (
-                                                                                <>
-                                                                                    <Spinner size="sm" className="me-2" />
-                                                                                    Generating...
-                                                                                </>
-                                                                            ) : (
-                                                                                'Download'
-                                                                            )}
-                                                                        </Button>
+                                                                    <Col xs={2} className="text-end">
+                                                                        <DownloadButton buildId={build.id} />
                                                                     </Col>
                                                                 </Row>
                                                             </div>

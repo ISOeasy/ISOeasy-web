@@ -30,7 +30,8 @@ query GetBuildsByPlatform($platform: Platform!) {
       appName
       version
       platform
-      downloadUrl
+      filePath
+      fileName
       fileSize
       checksum
       changelog

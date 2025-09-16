@@ -32,11 +32,13 @@ export type Build = {
   changelog?: Maybe<Scalars['String']['output']>;
   checksum?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
-  downloadUrl?: Maybe<Scalars['String']['output']>;
+  fileName: Scalars['String']['output'];
+  filePath: Scalars['String']['output'];
   fileSize?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   metadata?: Maybe<Scalars['JSON']['output']>;
   platform: Platform;
+  releaseNotes: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   version: Scalars['String']['output'];
 };
@@ -83,10 +85,12 @@ export type CreateBuildInput = {
   appName: Scalars['String']['input'];
   changelog?: InputMaybe<Scalars['String']['input']>;
   checksum?: InputMaybe<Scalars['String']['input']>;
-  downloadUrl?: InputMaybe<Scalars['String']['input']>;
+  fileName: Scalars['String']['input'];
+  filePath: Scalars['String']['input'];
   fileSize?: InputMaybe<Scalars['Int']['input']>;
   metadata?: InputMaybe<Scalars['JSON']['input']>;
   platform: Platform;
+  releaseNotes: Scalars['String']['input'];
   version: Scalars['String']['input'];
 };
 
@@ -449,10 +453,12 @@ export type UpdateBuildInput = {
   appName?: InputMaybe<Scalars['String']['input']>;
   changelog?: InputMaybe<Scalars['String']['input']>;
   checksum?: InputMaybe<Scalars['String']['input']>;
-  downloadUrl?: InputMaybe<Scalars['String']['input']>;
+  fileName?: InputMaybe<Scalars['String']['input']>;
+  filePath?: InputMaybe<Scalars['String']['input']>;
   fileSize?: InputMaybe<Scalars['Int']['input']>;
   metadata?: InputMaybe<Scalars['JSON']['input']>;
   platform?: InputMaybe<Platform>;
+  releaseNotes?: InputMaybe<Scalars['String']['input']>;
   version?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -563,7 +569,7 @@ export type GetBuildsByPlatformQueryVariables = Exact<{
 }>;
 
 
-export type GetBuildsByPlatformQuery = { __typename?: 'Query', buildsByPlatform: { __typename?: 'BuildConnection', totalCount: number, builds: Array<{ __typename?: 'Build', id: string, appName: string, version: string, platform: Platform, downloadUrl?: string | null, fileSize?: number | null, checksum?: string | null, changelog?: string | null, createdAt?: string | null, metadata?: any | null }> } };
+export type GetBuildsByPlatformQuery = { __typename?: 'Query', buildsByPlatform: { __typename?: 'BuildConnection', totalCount: number, builds: Array<{ __typename?: 'Build', id: string, appName: string, version: string, platform: Platform, filePath: string, fileName: string, fileSize?: number | null, checksum?: string | null, changelog?: string | null, createdAt?: string | null, metadata?: any | null }> } };
 
 
 export const CreateUserDocument = gql`
@@ -868,7 +874,8 @@ export const GetBuildsByPlatformDocument = gql`
       appName
       version
       platform
-      downloadUrl
+      filePath
+      fileName
       fileSize
       checksum
       changelog
